@@ -33,8 +33,8 @@ h1{
     cursor: pointer;
     float:left;
     
-    height:10em;
-    width: 10em;
+    height:8em;
+    width: 11em;
     margin-bottom:1em;
 }
 
@@ -53,3 +53,11 @@ h4,h6{
     left: 45%;
    
 }
+#addressLines {
+    color: black;
+    font-family: cursive;
+}
+#userWelcome{
+    
+}
+

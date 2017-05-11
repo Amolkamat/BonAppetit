@@ -1,7 +1,8 @@
 var authorizationToken = "d7fda2a55ab194aa43164678b555e918";
 
 $("#citySubmit").on("click", function(event) {
-    console.log("Hello");
+     $("#resPanel").hide();
+    
     event.preventDefault();
 
     var cityValue = $("#city").val().trim();
@@ -27,6 +28,7 @@ $("#citySubmit").on("click", function(event) {
                 dataType: 'json',
                 success: function(response) {
                     closeModal();
+                    $("#resPanel").show();
                     var searchContentDiv = $("<div class='searchResultsContent'>");
                     $("#leftRestaurantSection").empty();
 
@@ -40,14 +42,14 @@ $("#citySubmit").on("click", function(event) {
                         var foodImage = "";
 
                         if (value["restaurant"].thumb == "") {
-                            foodImage = "./assets/images/food.jpg"
+                            foodImage = "./assets/images/veggie.jpg"
                         } else {
                             foodImage = value["restaurant"].thumb;
                         }
                         restaurantCounter++;
 
                         var restaurantName = $("<h4>" + restaurantCounter + ". " + value["restaurant"].name + "</h4>");
-                        var detailsColumnDiv = $("<div class='col-md-6' >");
+                        var detailsColumnDiv = $("<div class='col-md-3' >");
                         $(detailsColumnDiv).appendTo(searchResultItem);
                         $(restaurantName).appendTo(detailsColumnDiv);
 
@@ -72,7 +74,15 @@ $("#citySubmit").on("click", function(event) {
                             $(ratingDiv).append('<i class="fa fa-star-o" aria-hidden="true"></i>');
                         }
 
+                        var addressColumnDiv = $("<div class='col-md-3' >");
 
+                        var addressArray = value["restaurant"].location.address.split(',');;
+                        $.each(addressArray, function( index, value ) {
+                               var addressLine = $("<h5 id='addressLines' > " + value + "</h5>").appendTo(addressColumnDiv); 
+
+                            });
+                        
+                        $(addressColumnDiv).appendTo(searchResultItem);
 
                         var cusineList = $("<h6> <b> Cuisines: </b> " + value["restaurant"].cuisines + "</h6>");
                         $(cusineList).appendTo(detailsColumnDiv);
@@ -115,3 +125,9 @@ function closeModal() {
     document.getElementById('modal').style.display = 'none';
     document.getElementById('fade').style.display = 'none';
 }
+
+$(document).ready(function() {
+
+    $("#resPanel").hide();
+
+})

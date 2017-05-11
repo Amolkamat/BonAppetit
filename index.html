@@ -19,18 +19,23 @@
    </head>
    <body>
       <div class="container">
-         <div class="form-group" id="playerWelcome">
+         
+         <div class="form-group" id="userWelcome">
             <h1 class="text-center">First we eat, then we do everything else</h1>
-            <div class="input-group">
-               <input id="city" name="city" class="form-control" autocomplete="off" data-country="us">
+   
+            <div class="input-group col-md-6 col-md-offset-3">
+               <input id="city" name="city" class="form-control" autocomplete="off" data-country="us" placeholder="Enter City Name">
                <span class="input-group-btn">
-               <button class="btn btn-default" type="button" id="citySubmit">Go!</button>
+               
+               <button type="submit" id="citySubmit" class="btn btn-custom"><span class="glyphicon glyphicon-search custom-glyph-color"></span></button>
                </span>
-            </div>
+           
+          </div>  
+
          </div>
          <div class="container">
          <div class="row searchResultsContent">
-         <div class="panel panel-default">
+         <div class="panel panel-default" id="resPanel">
                <div class="panel-body">
                   <div id="restaurantPanel">
                    
@@ -46,7 +51,7 @@
          </div>
          <div id="fade"></div>
          <div id="modal">
-            <img id="loader" src="./assets/images/wheel.gif" />
+            <img id="loader" src="./assets/images/spin.gif" />
         </div>
 
 
