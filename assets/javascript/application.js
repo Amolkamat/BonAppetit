@@ -1,4 +1,18 @@
 var authorizationToken = "d7fda2a55ab194aa43164678b555e918";
+var config = {
+    apiKey: "AIzaSyAtzmg1dG3fWTrispYckD18L0Wnz0RAGno",
+    authDomain: "bonapetite-ffb65.firebaseapp.com",
+    databaseURL: "https://bonapetite-ffb65.firebaseio.com",
+    projectId: "bonapetite-ffb65",
+    storageBucket: "bonapetite-ffb65.appspot.com",
+    messagingSenderId: "695948248134"
+  };
+
+firebase.initializeApp(config);
+// Create a variable to reference the database
+var database = firebase.database();
+
+
 
 $("#citySubmit").on("click", function(event) {
      $("#resPanel").hide();
@@ -31,6 +45,9 @@ $("#citySubmit").on("click", function(event) {
                 success: function(response) {
                     closeModal();
                     $("#resPanel").show();
+
+                    //Build the DOM dynamically 
+
                     var searchContentDiv = $("<div class='searchResultsContent'>");
                     $("#leftRestaurantSection").empty();
 
@@ -39,6 +56,9 @@ $("#citySubmit").on("click", function(event) {
                     $.each(response["restaurants"], function(index, value) {
 
                         var searchResultItem = $("<div class='row' >");
+
+                        //Section 1 - Adding the Restaurant Image
+
                         var imageColumnDiv = $("<div class='col-md-3' >");
                         $(imageColumnDiv).appendTo(searchResultItem);
                         var foodImage = "";
@@ -50,8 +70,11 @@ $("#citySubmit").on("click", function(event) {
                         }
                         restaurantCounter++;
 
-                        var restaurantName = $("<h4>" + restaurantCounter + ". " + value["restaurant"].name + "</h4>");
+                        
+
+                        //Section 2 - Append Restaurant Name and Rating section
                         var detailsColumnDiv = $("<div class='col-md-3' >");
+                        var restaurantName = $("<h4>" + restaurantCounter + ". " + value["restaurant"].name + "</h4>");
                         $(detailsColumnDiv).appendTo(searchResultItem);
                         $(restaurantName).appendTo(detailsColumnDiv);
 
@@ -76,6 +99,7 @@ $("#citySubmit").on("click", function(event) {
                             $(ratingDiv).append('<i class="fa fa-star-o" aria-hidden="true"></i>');
                         }
 
+                        //Section 3 - Append Address of the restaurant
                         var addressColumnDiv = $("<div class='col-md-3' >");
 
                         var addressArray = value["restaurant"].location.address.split(',');;
@@ -85,6 +109,13 @@ $("#citySubmit").on("click", function(event) {
                             });
                         
                         $(addressColumnDiv).appendTo(searchResultItem);
+
+                        //Section 4 - Add the appropriate action buttons
+                        var actionButtonsColumnDiv = $("<div class='col-md-1' >");
+
+                        var actionButton = $("<input type='button' value='Add me' class='btn btn-custom restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
+
+                        $(actionButtonsColumnDiv).appendTo(searchResultItem);
 
                         var cusineList = $("<h6> <b> Cuisines: </b> " + value["restaurant"].cuisines + "</h6>");
                         $(cusineList).appendTo(detailsColumnDiv);
@@ -143,4 +174,30 @@ $(document).ready(function() {
     $("#userWelcome").hide();
     $(".navbar").hide();
 
+    //Get all user information from the database.
+
+    $("#restaurantPanel").on("click",".restaurantAdd",function() {
+        console.log("Hello");
+
+    })  
+
 })
+
+$(function() {
+
+    $('#login-form-link').click(function(e) {
+        $("#login-form").delay(100).fadeIn(100);
+        $("#register-form").fadeOut(100);
+        $('#register-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+    });
+    $('#register-form-link').click(function(e) {
+        $("#register-form").delay(100).fadeIn(100);
+        $("#login-form").fadeOut(100);
+        $('#login-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+    });
+
+});
