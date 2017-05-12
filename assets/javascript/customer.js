@@ -1,3 +1,4 @@
+var customerKey = "";
 var customerObject = 	{
 
 	"customerId": 0,
@@ -8,47 +9,89 @@ var customerObject = 	{
 		password: "",
 		emailAddress: ""
 	},
-	"restaurants": [
-		{
-			type: "",
-			restaurantId:"",
-			restaurantName:"",
-			userRating:"",
-			"location" : {
-				latitude:"",
-				longitude:""
-			}
-		}
+	"restaurants": [	
 
 	]
 }
 
+var customerList=[];
+
+var customerKeyObject = {
+	"key":"",
+	"customerData": ""
+};
+
+
 $(document).ready(function() {
 
-
-	console.log("Customer " + JSON.stringify(customerObject));
 
 	$("#registerSubmit").on("click",function() {
 
 		//Validate input data and add the customer into Database
-		customerObject.profile.loginId = $("#username").val();
-		customerObject.profile.password = $("#email").val();
-		customerObject.profile.lemailAddress = $("#password").val();
+
+		//Add object to js domain object after validation
+		customerObject.profile.firstName = $("#firstName").val();
+		customerObject.profile.lastName = $("#lastName").val();
+		debugger;
+		customerObject.profile.loginId = $("#userName").val();
+		customerObject.profile.emailAddress = $("#email").val();
+		customerObject.profile.password = $("#passwordRegister").val();
 
 
 		//Push customer if all values are good - 
-		//	database.ref().push(customerObject);
+		database.ref().push(customerObject);
 
-     openModal();
+		     openModal();
     $(".wrapper").hide();
     $("#userWelcome").show();
     $(".navbar").show();
     closeModal();
-				
+    
+
 
 	})
 
+	//Initial Read and get the appropriate customer Objects
+	database.ref().on("child_added", function(snapshot) {
+				
+		customerKeyObject.key = snapshot.key;
+		customerKeyObject.customerData = snapshot.val();
+		customerList.push(customerKeyObject);
+		customerKey = snapshot.key;
+
+		console.log("Customer Object from DB " + JSON.stringify(customerKeyObject));
+	});
+	
+	    $("#restaurantPanel").on("click",".restaurantAdd",function() {
+        
+	    //Get the key for Testing purposes.
+
+        //Check if the restaurant id is not available already
+        console.log($(this).attr("data-restaurantId"));	
+
+
+        //Add the restaurant object to Customer Id
+        var selectedRestaurant = {
+        	type: "customerSelected",
+			restaurantId:$(this).attr("data-restaurantId"),
+			restaurantName:$(this).attr("data-restaurantName"),
+			userRating:4,
+			"location" : {
+				latitude:$(this).attr("data-restaurantLatitude"),
+				longitude:$(this).attr("data-restaurantLongitude")
+        	}
+        }
+        customerObject.restaurants.push(selectedRestaurant);
+        	
+
+        console.log("/"+customerKey +"/restaurants/");
+
+        database.ref("/"+customerKey +"/").update({
+
+        	restaurants: customerObject.restaurants
+        })
+        
+    } )
 
 	
-
 })

@@ -115,6 +115,17 @@ $("#citySubmit").on("click", function(event) {
 
                         var actionButton = $("<input type='button' value='Add me' class='btn btn-custom restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
 
+                        $(actionButton)
+                                .attr({
+                                        
+                                        "data-restaurantId": value["restaurant"].id,
+                                        "data-restaurantName": value["restaurant"].name,
+                                        "data-restaurantLatitude": value["restaurant"].location.latitude,
+                                        "data-restaurantLongitude": value["restaurant"].location.longitude
+                                        
+                                    })
+
+                        
                         $(actionButtonsColumnDiv).appendTo(searchResultItem);
 
                         var cusineList = $("<h6> <b> Cuisines: </b> " + value["restaurant"].cuisines + "</h6>");
@@ -176,10 +187,7 @@ $(document).ready(function() {
 
     //Get all user information from the database.
 
-    $("#restaurantPanel").on("click",".restaurantAdd",function() {
-        console.log("Hello");
 
-    })  
 
 })
 
