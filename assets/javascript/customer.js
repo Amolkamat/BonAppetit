@@ -24,6 +24,31 @@ var customerKeyObject = {
 
 $(document).ready(function() {
 
+$("#loginButton").on("click",function(){
+    
+ 	//Find if the username password matches.
+ 	$.each(customerList, function( index, value ) {
+ 		console.log(value.customerData.profile.loginId)
+ 		
+ 		if (value.customerData.profile.loginId=== $("#username").val() && value.customerData.profile.password=== $("#password").val())
+ 		{
+ 			//Found Match for the correct customer
+ 			customerKey = value.key;
+ 			customerObject = value.customerData;
+ 			console.log(customerObject);
+
+ 			$(".wrapper").hide();
+    		$("#userWelcome").show();
+    		$(".navbar").show();
+
+    
+ 		} else {
+ 			console.log("Sorry invalid attempt");
+ 		}
+	})
+
+ 	
+})
 
 	$("#registerSubmit").on("click",function() {
 
@@ -47,7 +72,6 @@ $(document).ready(function() {
     $(".navbar").show();
     closeModal();
     
-
 
 	})
 
@@ -93,5 +117,8 @@ $(document).ready(function() {
         
     } )
 
+	 //BootStrap validator function
+	 
+	//Sign Out Button - Clean up Script
 	
 })

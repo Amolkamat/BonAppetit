@@ -170,13 +170,7 @@ function closeModal() {
     document.getElementById('fade').style.display = 'none';
 }
 
-$("#loginButton").on("click",function(){
-     openModal();
-    $(".wrapper").hide();
-    $("#userWelcome").show();
-    $(".navbar").show();
-    closeModal();
-})
+
 
 $(document).ready(function() {
    
