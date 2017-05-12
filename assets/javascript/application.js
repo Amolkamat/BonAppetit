@@ -24,7 +24,9 @@ $("#citySubmit").on("click", function(event) {
                     request.setRequestHeader("user-key", authorizationToken);
                     openModal();
                 },
-                url: "https://developers.zomato.com/api/v2.1/search?lat=" + results[0].geometry.location.lat() + "&lon=" + results[0].geometry.location.lng(),
+                
+
+                url: "https://developers.zomato.com/api/v2.1/search?q=" + $("#restaurantName").val() + "&lat=" + results[0].geometry.location.lat() + "&lon=" + results[0].geometry.location.lng(),
                 dataType: 'json',
                 success: function(response) {
                     closeModal();
@@ -126,8 +128,19 @@ function closeModal() {
     document.getElementById('fade').style.display = 'none';
 }
 
-$(document).ready(function() {
+$("#loginButton").on("click",function(){
+     openModal();
+    $(".wrapper").hide();
+    $("#userWelcome").show();
+    $(".navbar").show();
+    closeModal();
+})
 
+$(document).ready(function() {
+   
     $("#resPanel").hide();
+
+    $("#userWelcome").hide();
+    $(".navbar").hide();
 
 })
