@@ -43,110 +43,11 @@ $("#citySubmit").on("click", function(event) {
                 url: "https://developers.zomato.com/api/v2.1/search?q=" + $("#restaurantName").val() + "&lat=" + results[0].geometry.location.lat() + "&lon=" + results[0].geometry.location.lng(),
                 dataType: 'json',
                 success: function(response) {
+                    console.log("Hotel Response" + response);
+
                     closeModal();
-                    $("#resPanel").show();
+                    buildRestaurantPanel(response);
 
-                    //Build the DOM dynamically 
-
-                    var searchContentDiv = $("<div class='searchResultsContent'>");
-                    $("#leftRestaurantSection").empty();
-
-                    console.log(response["restaurants"]);
-                    var restaurantCounter = 0;
-                    $.each(response["restaurants"], function(index, value) {
-
-                        var searchResultItem = $("<div class='row' >");
-
-                        //Section 1 - Adding the Restaurant Image
-                        var imageId = "resImage" + restaurantCounter;
-
-                        var imageColumnDiv = $("<div class='col-md-3' >");
-
-
-                        $(imageColumnDiv).appendTo(searchResultItem);
-                        var foodImage = "";
-
-                        if (value["restaurant"].thumb == "") {
-                            foodImage = "./assets/images/foodImage" + Math.floor((Math.random() * 19) + 1) + ".jpeg"; 
-                            
-                        } else {
-                            foodImage = value["restaurant"].thumb;
-                        }
-                        restaurantCounter++;
-
-
-
-                        //Section 2 - Append Restaurant Name and Rating section
-                        var detailsColumnDiv = $("<div class='col-md-3' >");
-                        var restaurantName = $("<h4>" + restaurantCounter + ". " + value["restaurant"].name + "</h4>");
-                        $(detailsColumnDiv).appendTo(searchResultItem);
-                        $(restaurantName).appendTo(detailsColumnDiv);
-
-                        var ratingClass = "rating" + restaurantCounter;
-
-                        var ratingDiv = $("<div id= " + ratingClass + ">");
-                        $(ratingDiv).appendTo(detailsColumnDiv);
-
-
-                        var ratingValue = value["restaurant"].user_rating.aggregate_rating;
-                        var roundedValue = Math.trunc(ratingValue);
-                        var selector = "#" + ratingClass;
-                        for (var j = 0; j < roundedValue; j++) {
-                            $(ratingDiv).append('<i class="fa fa-star" aria-hidden="true"></i>');
-                        }
-                        var k = 0;
-                        if (ratingValue - roundedValue > 0.4 && ratingValue - roundedValue < 1) {
-                            k = 1;
-                            $(ratingDiv).append('<i class="fa fa-star-half-o" aria-hidden="true"></i>');
-                        }
-                        for (var i = Math.trunc(ratingValue) + k; i < 5; i++) {
-                            $(ratingDiv).append('<i class="fa fa-star-o" aria-hidden="true"></i>');
-                        }
-
-                        //Section 3 - Append Address of the restaurant
-                        var addressColumnDiv = $("<div class='col-md-3' >");
-
-                        var addressArray = value["restaurant"].location.address.split(',');;
-                        $.each(addressArray, function(index, value) {
-                            var addressLine = $("<h5 id='addressLines' > " + value + "</h5>").appendTo(addressColumnDiv);
-
-                        });
-
-                        $(addressColumnDiv).appendTo(searchResultItem);
-
-                        //Section 4 - Add the appropriate action buttons
-                        var actionButtonsColumnDiv = $("<div class='col-md-1' >");
-
-                        var actionButton = $("<input type='button' value='Add me' class='btn btn-custom restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
-
-                        $(actionButton)
-                            .attr({
-
-                                "data-restaurantId": value["restaurant"].id,
-                                "data-restaurantName": value["restaurant"].name,
-                                "data-restaurantLatitude": value["restaurant"].location.latitude,
-                                "data-restaurantLongitude": value["restaurant"].location.longitude,
-                                "data-imageId": imageId
-                            })
-
-
-                        $(actionButtonsColumnDiv).appendTo(searchResultItem);
-
-                        var cusineList = $("<h6> <b> Cuisines: </b> " + value["restaurant"].cuisines + "</h6>");
-                        $(cusineList).appendTo(detailsColumnDiv);
-                        var $restaurantImage = $("<img class='img-responsive'>")
-                            .attr({
-                                "src": foodImage
-
-                            })
-                        $($restaurantImage).attr('id', imageId);
-
-                        $($restaurantImage).appendTo(imageColumnDiv);
-
-                        //$(gifDiv.appendTo("#giphyPanel"));
-                        $(searchResultItem.appendTo("#leftRestaurantSection"));
-
-                    });
 
 
 
@@ -170,8 +71,117 @@ function closeModal() {
 
 var buildRestaurantPanel = function(response) {
 
+    $("#resPanel").show();
+
+    //Build the DOM dynamically 
+
+    var searchContentDiv = $("<div class='searchResultsContent'>");
+    $("#leftRestaurantSection").empty();
+
+    console.log("JQUERY TWICE" + response);
+
+    var restaurantCounter = 0;
+    $.each(response["restaurants"], function(index, value) {
+
+        var searchResultItem = $("<div class='row' >");
+
+        //Section 1 - Adding the Restaurant Image
+        var imageId = "resImage" + restaurantCounter;
+
+        var imageColumnDiv = $("<div class='col-md-3' >");
 
 
+        $(imageColumnDiv).appendTo(searchResultItem);
+        var foodImage = "";
+        
+        console.log(value["restaurant"]);
+      
+
+        if (value["restaurant"].thumb == "") {
+            foodImage = "./assets/images/foodImage" + Math.floor((Math.random() * 19) + 1) + ".jpeg";
+
+        } else {
+            foodImage = value["restaurant"].thumb;
+        }
+        restaurantCounter++;
+
+
+
+        //Section 2 - Append Restaurant Name and Rating section
+        var detailsColumnDiv = $("<div class='col-md-3' >");
+        var restaurantName = $("<h4>" + restaurantCounter + ". " + value["restaurant"].name + "</h4>");
+        $(detailsColumnDiv).appendTo(searchResultItem);
+        $(restaurantName).appendTo(detailsColumnDiv);
+
+        var ratingClass = "rating" + restaurantCounter;
+
+        var ratingDiv = $("<div id= " + ratingClass + ">");
+        $(ratingDiv).appendTo(detailsColumnDiv);
+
+
+        var ratingValue = value["restaurant"].user_rating.aggregate_rating;
+        var roundedValue = Math.trunc(ratingValue);
+        var selector = "#" + ratingClass;
+        for (var j = 0; j < roundedValue; j++) {
+            $(ratingDiv).append('<i class="fa fa-star" aria-hidden="true"></i>');
+        }
+        var k = 0;
+        if (ratingValue - roundedValue > 0.4 && ratingValue - roundedValue < 1) {
+            k = 1;
+            $(ratingDiv).append('<i class="fa fa-star-half-o" aria-hidden="true"></i>');
+        }
+        for (var i = Math.trunc(ratingValue) + k; i < 5; i++) {
+            $(ratingDiv).append('<i class="fa fa-star-o" aria-hidden="true"></i>');
+        }
+
+        //Section 3 - Append Address of the restaurant
+        var addressColumnDiv = $("<div class='col-md-3' >");
+
+        var addressArray = value["restaurant"].location.address.split(',');;
+        $.each(addressArray, function(index, value) {
+            var addressLine = $("<h5 id='addressLines' > " + value + "</h5>").appendTo(addressColumnDiv);
+
+        });
+
+        $(addressColumnDiv).appendTo(searchResultItem);
+
+        //Section 4 - Add the appropriate action buttons
+        var actionButtonsColumnDiv = $("<div class='col-md-1' >");
+
+        var actionButton = $("<input type='button' value='Add me' class='btn btn-custom restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
+
+        $(actionButton)
+            .attr({
+
+                "data-restaurantId": value["restaurant"].id,
+                "data-restaurantName": value["restaurant"].name,
+                "data-restaurantLatitude": value["restaurant"].location.latitude,
+                "data-restaurantLongitude": value["restaurant"].location.longitude,
+                "data-imageId": imageId,
+                "data-image":value["restaurant"].thumb,
+                "data-cuisines":value["restaurant"].cuisines,
+                "data-address": value["restaurant"].location.address,
+                "data-rating":value["restaurant"].user_rating.aggregate_rating
+            })
+
+
+        $(actionButtonsColumnDiv).appendTo(searchResultItem);
+
+        var cusineList = $("<h6> <b> Cuisines: </b> " + value["restaurant"].cuisines + "</h6>");
+        $(cusineList).appendTo(detailsColumnDiv);
+        var $restaurantImage = $("<img class='img-responsive'>")
+            .attr({
+                "src": foodImage
+
+            })
+        $($restaurantImage).attr('id', imageId);
+
+        $($restaurantImage).appendTo(imageColumnDiv);
+
+        //$(gifDiv.appendTo("#giphyPanel"));
+        $(searchResultItem.appendTo("#leftRestaurantSection"));
+
+    });
 
 }
 

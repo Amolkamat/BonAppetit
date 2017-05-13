@@ -8,10 +8,8 @@ var customerObject = 	{
 		loginId:"",
 		password: "",
 		emailAddress: ""
-	},
-	"restaurants": [	
+	}
 
-	]
 }
 
 var customerList=[];
@@ -27,16 +25,21 @@ $(document).ready(function() {
 $("#loginButton").on("click",function(){
     
  	//Find if the username password matches.
- 	console.log(customerList.length)
+ 	
+    console.log(" Entire Customer List" + customerList);
+
+
+
  	$.each(customerList, function( index, value ) {
- 		console.log(value.customerData.profile.loginId)
+ 		
  		
  		if (value.customerData.profile.loginId=== $("#username").val() && value.customerData.profile.password=== $("#password").val())
  		{
  			//Found Match for the correct customer
  			customerKey = value.key;
  			customerObject = value.customerData;
- 			console.log(customerObject);
+            console.log(JSON.stringify(value.customerData));
+
 
  			//Modify the Screen information as per the current customer
 
@@ -52,11 +55,10 @@ $("#loginButton").on("click",function(){
     		$("#username").val("");
     		$("#password").val("");	
     
- 		} else {
- 			console.log("Sorry invalid attempt");
- 		}
+ 		} 
 	})
 
+    console.log("Type of Customer Rstaurants " + Array.isArray(customerObject.restaurants) );
  	
 })
 
@@ -104,20 +106,26 @@ $("#loginButton").on("click",function(){
         //Check if the restaurant id is not available already
         console.log($(this).attr("data-restaurantId"));	
 
+        console.log("from Restaurant Add" + customerObject.restaurants);
+
 
         //Add the restaurant object to Customer Id
         var selectedRestaurant = {
         	type: "0",
 			restaurantId:$(this).attr("data-restaurantId"),
 			restaurantName:$(this).attr("data-restaurantName"),
-			userRating:4,
+			userRating:$(this).attr("data-rating"),
+            cuisines: $(this).attr("data-cuisines"),
+            image: $(this).attr("data-image"),
 			"location" : {
 				latitude:$(this).attr("data-restaurantLatitude"),
-				longitude:$(this).attr("data-restaurantLongitude")
+				longitude:$(this).attr("data-restaurantLongitude"),
+                address: $(this).attr("data-address")
         	}
         }
         console.log($(this).attr("data-restaurantLatitude"));
         console.log($(this).attr("data-restaurantLongitude"));
+        console.log(customerObject);
 
                 if(customerObject.restaurants == null)
         {
@@ -134,6 +142,7 @@ $("#loginButton").on("click",function(){
         database.ref("/"+customerKey +"/").update({
 
         	restaurants: customerObject.restaurants
+
         }) 
 
         var cart = $('.dropdown');
@@ -185,4 +194,42 @@ $("#loginButton").on("click",function(){
     $(".wrapper").show();
 
 	})
+    $("#favouriteRestaurants").on("click",function(){ 
+        console.log ("Favourite Restaurants");
+    //$("#resPanel").hide();
+    $("#leftRestaurantSection").empty();
+    console.log(customerObject.restaurants);
+    
+    
+
+    var domainRestaurantObject = {}
+    var domainRestaurantList = {
+        "restaurants":[]
+    }
+
+    $.each(customerObject.restaurants, function( index, value ) {
+        
+        domainRestaurantObject = new Object();
+        domainRestaurantObject.restaurant = new Object();
+        domainRestaurantObject.restaurant.name = value.restaurantName;
+        domainRestaurantObject.restaurant.thumb = value.image;
+        domainRestaurantObject.restaurant.location = {};
+        domainRestaurantObject.restaurant.location.latitude = value.location.latitude;
+        domainRestaurantObject.restaurant.location.longitude = value.location.longitude;
+        domainRestaurantObject.restaurant.location.address = value.location.address,
+        domainRestaurantObject.restaurant.user_rating = new Object();
+        domainRestaurantObject.restaurant.user_rating.aggregate_rating = value.userRating;
+        domainRestaurantObject.restaurant.cuisines = value.cuisines;
+        domainRestaurantList.restaurants.push(domainRestaurantObject);
+        
+    }); 
+    
+       
+
+    //domainRestaurantObject.restaurant= domainRestaurantObject;
+    buildRestaurantPanel(domainRestaurantList);
+  
+    
+
+    })
 })
