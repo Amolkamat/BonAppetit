@@ -128,11 +128,12 @@ $("#loginButton").on("click",function(){
 
         console.log("/"+customerKey +"/restaurants/");
 
-        /*
+        
         database.ref("/"+customerKey +"/").update({
 
         	restaurants: customerObject.restaurants
-        }) */
+        }) 
+        
         var cart = $('.dropdown');
 
         var imgtodrag = $("#" + $(this).attr("data-imageId"));
