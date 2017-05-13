@@ -6,7 +6,7 @@ var config = {
     projectId: "bonapetite-ffb65",
     storageBucket: "bonapetite-ffb65.appspot.com",
     messagingSenderId: "695948248134"
-  };
+};
 
 firebase.initializeApp(config);
 // Create a variable to reference the database
@@ -15,8 +15,8 @@ var database = firebase.database();
 
 
 $("#citySubmit").on("click", function(event) {
-     $("#resPanel").hide();
-    
+    $("#resPanel").hide();
+
     event.preventDefault();
 
     var cityValue = $("#city").val().trim();
@@ -38,7 +38,7 @@ $("#citySubmit").on("click", function(event) {
                     request.setRequestHeader("user-key", authorizationToken);
                     openModal();
                 },
-                
+
 
                 url: "https://developers.zomato.com/api/v2.1/search?q=" + $("#restaurantName").val() + "&lat=" + results[0].geometry.location.lat() + "&lon=" + results[0].geometry.location.lng(),
                 dataType: 'json',
@@ -58,19 +58,23 @@ $("#citySubmit").on("click", function(event) {
                         var searchResultItem = $("<div class='row' >");
 
                         //Section 1 - Adding the Restaurant Image
+                        var imageId = "resImage" + restaurantCounter;
 
                         var imageColumnDiv = $("<div class='col-md-3' >");
+
+
                         $(imageColumnDiv).appendTo(searchResultItem);
                         var foodImage = "";
 
                         if (value["restaurant"].thumb == "") {
-                            foodImage = "./assets/images/veggie.jpg"
+                            foodImage = "./assets/images/foodImage" + Math.floor((Math.random() * 19) + 1) + ".jpeg"; 
+                            
                         } else {
                             foodImage = value["restaurant"].thumb;
                         }
                         restaurantCounter++;
 
-                        
+
 
                         //Section 2 - Append Restaurant Name and Rating section
                         var detailsColumnDiv = $("<div class='col-md-3' >");
@@ -83,10 +87,10 @@ $("#citySubmit").on("click", function(event) {
                         var ratingDiv = $("<div id= " + ratingClass + ">");
                         $(ratingDiv).appendTo(detailsColumnDiv);
 
-                        
+
                         var ratingValue = value["restaurant"].user_rating.aggregate_rating;
                         var roundedValue = Math.trunc(ratingValue);
-                        var selector =  "#" + ratingClass;
+                        var selector = "#" + ratingClass;
                         for (var j = 0; j < roundedValue; j++) {
                             $(ratingDiv).append('<i class="fa fa-star" aria-hidden="true"></i>');
                         }
@@ -103,11 +107,11 @@ $("#citySubmit").on("click", function(event) {
                         var addressColumnDiv = $("<div class='col-md-3' >");
 
                         var addressArray = value["restaurant"].location.address.split(',');;
-                        $.each(addressArray, function( index, value ) {
-                               var addressLine = $("<h5 id='addressLines' > " + value + "</h5>").appendTo(addressColumnDiv); 
+                        $.each(addressArray, function(index, value) {
+                            var addressLine = $("<h5 id='addressLines' > " + value + "</h5>").appendTo(addressColumnDiv);
 
-                            });
-                        
+                        });
+
                         $(addressColumnDiv).appendTo(searchResultItem);
 
                         //Section 4 - Add the appropriate action buttons
@@ -116,16 +120,16 @@ $("#citySubmit").on("click", function(event) {
                         var actionButton = $("<input type='button' value='Add me' class='btn btn-custom restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
 
                         $(actionButton)
-                                .attr({
-                                        
-                                        "data-restaurantId": value["restaurant"].id,
-                                        "data-restaurantName": value["restaurant"].name,
-                                        "data-restaurantLatitude": value["restaurant"].location.latitude,
-                                        "data-restaurantLongitude": value["restaurant"].location.longitude
-                                        
-                                    })
+                            .attr({
 
-                        
+                                "data-restaurantId": value["restaurant"].id,
+                                "data-restaurantName": value["restaurant"].name,
+                                "data-restaurantLatitude": value["restaurant"].location.latitude,
+                                "data-restaurantLongitude": value["restaurant"].location.longitude,
+                                "data-imageId": imageId
+                            })
+
+
                         $(actionButtonsColumnDiv).appendTo(searchResultItem);
 
                         var cusineList = $("<h6> <b> Cuisines: </b> " + value["restaurant"].cuisines + "</h6>");
@@ -135,11 +139,9 @@ $("#citySubmit").on("click", function(event) {
                                 "src": foodImage
 
                             })
+                        $($restaurantImage).attr('id', imageId);
 
                         $($restaurantImage).appendTo(imageColumnDiv);
-
-
-
 
                         //$(gifDiv.appendTo("#giphyPanel"));
                         $(searchResultItem.appendTo("#leftRestaurantSection"));
@@ -150,10 +152,6 @@ $("#citySubmit").on("click", function(event) {
 
                 }
             });
-
-
-
-
         } else {
             console.log("Something got wrong " + status);
         }
@@ -161,8 +159,8 @@ $("#citySubmit").on("click", function(event) {
 });
 
 function openModal() {
-        document.getElementById('modal').style.display = 'block';
-        document.getElementById('fade').style.display = 'block';
+    document.getElementById('modal').style.display = 'block';
+    document.getElementById('fade').style.display = 'block';
 }
 
 function closeModal() {
@@ -170,18 +168,21 @@ function closeModal() {
     document.getElementById('fade').style.display = 'none';
 }
 
+var buildRestaurantPanel = function(response) {
 
+
+
+
+}
 
 $(document).ready(function() {
-   
+
     $("#resPanel").hide();
 
     $("#userWelcome").hide();
     $(".navbar").hide();
 
     //Get all user information from the database.
-
-
 
 })
 

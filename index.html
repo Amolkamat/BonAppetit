@@ -9,6 +9,7 @@
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&language=en"></script>
       <!-- jQuery -->
       <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
       <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet"/>
       <!-- Bootstrap CDN-->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -16,7 +17,9 @@
       <!-- Firebase Reference -->
       <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
       <link rel="stylesheet" type="text/css" href="./assets/css/custom.css">
-     
+        <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+
+        <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 
    </head>
    <body>
@@ -39,8 +42,8 @@
                <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                     <span class="glyphicon glyphicon-user" id="customerNam"></span>
-                     <strong>Mickey </strong>
+                     <span class="glyphicon glyphicon-user" ></span>
+                     <strong id="dropDownName">Mickey </strong>
                      <span class="glyphicon glyphicon-chevron-down"></span>
                      </a>
                      <ul class="dropdown-menu">
@@ -53,7 +56,7 @@
                                     </p>
                                  </div>
                                  <div class="col-lg-8">
-                                    <p class="text-left" id="customerName"><strong>Mickey Mouse</strong></p>
+                                    <p class="text-left" ><strong id="customerName">Mickey Mouse</strong></p>
                                     <p class="text-left small" id="customerEmail">crazytodevelop@@gmail.com</p>
                                     <p class="text-left">
                                        <a href="#" class="btn btn-primary btn-block btn-sm">Profile</a>
@@ -67,7 +70,7 @@
                         <li class="divider"></li>
                         <li><a href="#">Favourites Restaurants <span class="glyphicon glyphicon-heart pull-right"></span></a></li>
                         <li class="divider"></li>
-                        <li><a href="#">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+                        <li id="signOut"><a href="#">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
                      </ul>
                   </li>
                </ul>
@@ -83,13 +86,18 @@
                   <h3 class="text-center">Search your favourite Restaurant!</h3>
                   <div class="form-group">
                   </div>
-                  <div class="form-group">
-                     <input id="restaurantName" name="Restaurant Name" class="form-control" a placeholder="Enter Restaurant Name">
+                  
+                  <div class="form-group custom-input">
+                     <label for="restaurantName">Enter Restaurant Name</label>
+                     <input id="restaurantName" name="Restaurant Name" class="form-control" a placeholder="">
                   </div>
-                  <div class="form-group">   
-                     <input id="city" name="city" class="form-control" autocomplete="off" data-country="us" placeholder="Enter City Name">
-                  </div>
+                  <div class="form-group  custom-input">  
+                     <label for="city">Enter City Name</label> 
+                     <input id="city" name="city" class="form-control" autocomplete="off" data-country="us" placeholder="">
+                 
+                 
                   <button type="submit" id="citySubmit" class="btn btn-custom"><span class="glyphicon glyphicon-search custom-glyph-color"></span></button>
+                  </div>
                   </span>
                </div>
             </form>
@@ -116,22 +124,20 @@
                   <div class="row">
                      <div class="col-lg-12">
                         <form id="login-form" role="form" style="display: block;">
-                           <div class="form-group">
-                              <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                           <div class="form-group custom-input">
+                              <label for="username">Username</label>
+                              <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="" value="">
                            </div>
-                           <div class="form-group">
-                              <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                           <div class="form-group custom-input">
+                              <label for="password">Password</label>
+                              <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="">
                            </div>
                            <div class="form-group text-center">
                               <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
                               <label for="remember"> Remember Me</label>
                            </div>
                                <!-- #messages is where the messages are placed inside -->
-    <div class="form-group">
-        <div class="col-xs-9 col-xs-offset-3">
-            <div id="messages"></div>
-        </div>
-    </div>
+
                            <div class="form-group">
                               <div class="row">
                                  <div class="col-sm-6 col-sm-offset-3">
@@ -150,25 +156,31 @@
                            </div>
                         </form>
                         <form id="register-form" role="form" style="display: none;">
-                           <div class="form-group">
-                              <input type="text" name="firstName" id="firstName" tabindex="1" class="form-control" placeholder="First Name" value="">
+                           <div class="form-group custom-input">
+                              <label for="firstName">First Name</label>
+                              <input type="text" name="firstName" id="firstName" tabindex="1" class="form-control" placeholder="" value="">
                            </div>
-                           
-                           <div class="form-group">
-                              <input type="text" name="lastName" id="lastName" tabindex="2" class="form-control" placeholder="Last Name" value="">
+                           <label for="lastName">Last Name</label>
+                           <div class="form-group custom-input">
+                              <label for="lastName">Last Name</label>
+                              <input type="text" name="lastName" id="lastName" tabindex="2" class="form-control" placeholder="" value="">
                            </div>
 
-                           <div class="form-group">
-                              <input type="text" name="userName" id="userName" tabindex="3" class="form-control" placeholder="Username" value="">
+                           <div class="form-group custom-input">
+                              <label for="userName">User Name</label>
+                              <input type="text" name="userName" id="userName" tabindex="3" class="form-control" placeholder="" value="">
                            </div>
-                           <div class="form-group">
-                              <input type="email" name="email" id="email" tabindex="4" class="form-control" placeholder="Email Address" value="">
+                           <div class="form-group custom-input">
+                              <label for="email">Email Address</label>
+                              <input type="email" name="email" id="email" tabindex="4" class="form-control" placeholder="" value="">
                            </div>
-                           <div class="form-group">
-                              <input type="password" name="passwordRegister" id="passwordRegister" tabindex="5" class="form-control" placeholder="Password">
+                           <div class="form-group custom-input">
+                              <label for="passwordRegister">Password</label>
+                              <input type="password" name="passwordRegister" id="passwordRegister" tabindex="5" class="form-control" placeholder="">
                            </div>
-                           <div class="form-group">
-                              <input type="password" name="confirm-password" id="confirm-password" tabindex="6" class="form-control" placeholder="Confirm Password">
+                           <div class="form-group custom-input">
+                              <label for="confirm-password">Confirm Password</label>
+                              <input type="password" name="confirm-password" id="confirm-password" tabindex="6" class="form-control" placeholder="">
                            </div>
                            <div class="form-group">
                               <div class="row">
@@ -225,5 +237,6 @@
       <!-- JavaScript -->
       <script src="./assets/javascript/application.js"></script>
       <script src="./assets/javascript/customer.js"></script>
+      <script src="./assets/javascript/phanimate.jquery.js"></script>
    </body>
 </html>
