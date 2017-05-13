@@ -107,7 +107,7 @@ $("#loginButton").on("click",function(){
 
         //Add the restaurant object to Customer Id
         var selectedRestaurant = {
-        	type: "customerSelected",
+        	type: "0",
 			restaurantId:$(this).attr("data-restaurantId"),
 			restaurantName:$(this).attr("data-restaurantName"),
 			userRating:4,
@@ -116,8 +116,10 @@ $("#loginButton").on("click",function(){
 				longitude:$(this).attr("data-restaurantLongitude")
         	}
         }
-        
-        if(customerObject.restaurants == null)
+        console.log($(this).attr("data-restaurantLatitude"));
+        console.log($(this).attr("data-restaurantLongitude"));
+
+                if(customerObject.restaurants == null)
         {
         	customerObject.restaurants=[];
         }
@@ -133,7 +135,7 @@ $("#loginButton").on("click",function(){
 
         	restaurants: customerObject.restaurants
         }) 
-        
+
         var cart = $('.dropdown');
 
         var imgtodrag = $("#" + $(this).attr("data-imageId"));
