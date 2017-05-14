@@ -46,7 +46,7 @@ $("#citySubmit").on("click", function(event) {
                     console.log("Hotel Response" + response);
 
                     closeModal();
-                    buildRestaurantPanel(response);
+                    buildRestaurantPanel(response,"searchRestaurant");
 
 
 
@@ -69,7 +69,7 @@ function closeModal() {
     document.getElementById('fade').style.display = 'none';
 }
 
-var buildRestaurantPanel = function(response) {
+var buildRestaurantPanel = function(response,callOrigin) {
 
     $("#resPanel").show();
 
@@ -78,7 +78,7 @@ var buildRestaurantPanel = function(response) {
     var searchContentDiv = $("<div class='searchResultsContent'>");
     $("#leftRestaurantSection").empty();
 
-    console.log("JQUERY TWICE" + response);
+    
 
     var restaurantCounter = 0;
     $.each(response["restaurants"], function(index, value) {
@@ -87,7 +87,7 @@ var buildRestaurantPanel = function(response) {
 
         //Section 1 - Adding the Restaurant Image
         var imageId = "resImage" + restaurantCounter;
-
+        var rowId = "rowId" + restaurantCounter
         var imageColumnDiv = $("<div class='col-md-3' >");
 
 
@@ -147,8 +147,16 @@ var buildRestaurantPanel = function(response) {
 
         //Section 4 - Add the appropriate action buttons
         var actionButtonsColumnDiv = $("<div class='col-md-1' >");
+        if(callOrigin==="removeRestaurant")
+        {
+            var actionButton = $("<input type='button' value='Remove' class='btn btn-custom restaurantRemove'>  </input>").appendTo(actionButtonsColumnDiv);
+        }
+            else
 
-        var actionButton = $("<input type='button' value='Add me' class='btn btn-custom restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
+        {
+            var actionButton = $("<input type='button' value='Add me' class='btn btn-custom restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
+        }
+        
 
         $(actionButton)
             .attr({
@@ -161,7 +169,8 @@ var buildRestaurantPanel = function(response) {
                 "data-image":value["restaurant"].thumb,
                 "data-cuisines":value["restaurant"].cuisines,
                 "data-address": value["restaurant"].location.address,
-                "data-rating":value["restaurant"].user_rating.aggregate_rating
+                "data-rating":value["restaurant"].user_rating.aggregate_rating,
+                "data-parentRow":rowId
             })
 
 
@@ -177,6 +186,7 @@ var buildRestaurantPanel = function(response) {
         $($restaurantImage).attr('id', imageId);
 
         $($restaurantImage).appendTo(imageColumnDiv);
+        $(searchResultItem).addClass(rowId);
 
         //$(gifDiv.appendTo("#giphyPanel"));
         $(searchResultItem.appendTo("#leftRestaurantSection"));
