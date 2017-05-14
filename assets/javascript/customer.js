@@ -178,6 +178,10 @@ $(document).ready(function() {
             // Animation complete.
         });
 
+         var parentRowId = $(this).attr("data-parentRow");
+        
+        $("."+parentRowId).fadeOut(500, function(){});
+
     })
 
     //BootStrap validator function
@@ -247,6 +251,10 @@ $(document).ready(function() {
             restaurants: customerObject.restaurants
 
         })
+        //Animate and remove the row 
+        var parentRowId = $(this).attr("data-parentRow");
+        
+        $("."+parentRowId).fadeOut(500, function(){});
 });
 
    
