@@ -324,6 +324,7 @@ body{
 #flipbook{
     width:400px;
     height:300px;
+    
 
 }
 
@@ -334,7 +335,7 @@ body{
     line-height:300px;
     font-size:20px;
     text-align:center;
-    background-image: url("../images/FoodTab1.jpg");
+    
 }
 
 #flipbook .page-wrapper{
@@ -398,5 +399,20 @@ background-color:white;
 .restaurantMenuTable {
   border: 1px solid black;
   color: white;
-  background-image: url("../images/FoodTab1.jpg");
+  background-image: url("../images/FoodTab.jpg");
+}
+td {
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+.modal-header, .close {
+  font-family: 'chalkduster', fantasy, 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.modal-content {
+background-image: url("../images/FoodTab.jpg");
+color: white;
+}
+#menuCover {
+  font-family: cursive;
+  color: black;
 }

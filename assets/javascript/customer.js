@@ -2,6 +2,7 @@ var customerKey = "";
 var pageDisplayCounter = 0;
 var pageCounter = 0;
 var flipBookPageDisplay = 2;
+var restaurantName="";
 
 var customerObject = {
 
@@ -282,7 +283,7 @@ $(document).ready(function() {
         $(".modal-title").text($(this).attr("data-restaurantName"));
 
         //Empty Flipbook Div
-        var restaurantName = $(this).attr("data-restaurantName");
+        restaurantName = $(this).attr("data-restaurantName");
         console.log(restaurantName);
 
         //Call Restaurant API to get the menu item
@@ -306,9 +307,9 @@ $(document).ready(function() {
                     var restaurantMenu = $("<div> </div>").attr("id", "tableHolder" + tableHolder);
                     $(restaurantMenu).appendTo("#restaurantMenu");
 
+                    $("#menuCover").html(restaurantName + " - Enjoy and Love Food!")
                     
-                    
-                    var table = $('<table></table>').addClass('restaurantMenuTable');
+                    var table = $('<table> <tr><th>Item Id</th><th>Menu Item</th> <th>Price</th></tr></table>').addClass('restaurantMenuTable');
                     $(table).appendTo("#tableHolder" + tableHolder);
 
                     for (var menuCounter = 0; menuCounter < value["daily_menu"].dishes.length; menuCounter++) {
