@@ -154,9 +154,9 @@ var buildRestaurantPanel = function(response,callOrigin) {
             else
 
         {
-            var actionButton = $("<input type='button' value='Add me' class='btn btn-custom restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
+            var actionButton = $("<input type='button' value='Add me' class='btn btn-link restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
 
-            var menuButton = $("<input type='button' value='Menu' class='btn btn-custom menuItemDisplay' data-toggle='modal' data-target='#myModal' >  </input>").appendTo(actionButtonsColumnDiv);
+            var menuButton = $("<input type='button' value='Menu  ' class='btn btn-link menuItemDisplay' data-toggle='modal' data-target='#myModal' >  </input>").appendTo(actionButtonsColumnDiv);
         }
         
 
