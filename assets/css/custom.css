@@ -399,7 +399,7 @@ background-color:white;
 .restaurantMenuTable {
   border: 1px solid black;
   color: white;
-  background-image: url("../images/FoodTab.jpg");
+  
 }
 td {
     padding: 0.5em;
