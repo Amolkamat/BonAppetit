@@ -1,11 +1,10 @@
-<!doctype <html></html>
-<html>
+<!doctype <html></html<html>
    <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Bon Appetit!</title>
-      <link rel="stylesheet" type="text/css" href="./assets/css/custom.css"/>
+      
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDg1Ot4fgXiP_Vs2A8cLHWwoQ8k7cs9h9Q&libraries=places&language=en"></script>
       <!-- jQuery -->
       <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -218,12 +217,33 @@
                <div class="panel-body">
                   <div id="restaurantPanel">
                      <div class="col-md-12" id="leftRestaurantSection">
+                    
+
                      </div>
+
                   </div>
                </div>
             </div>
          </div>
       </div>
+      <!-- Restaurant Display Section -->
+       <!-- Restaurant Display Section -->
+      <div class="container">
+         <div class="row col-md-8 col-md-offset-1">
+            <div class="panel panel-default" id="mapPanel">
+               <div class="panel-body">
+                  <div id="mapPanelBody">
+                     <div class="col-md-12" id="mapSection">
+                     <div id="map"> </div>
+
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
       <!-- Restaurant Menu Section -->
       <div id="restaurantMenu">
       </div>
@@ -236,7 +256,7 @@
                </div>
                <div class="modal-body">
                   <div id="flipbook">
-                     <div class="hard" id="menuCover"></div>
+                     <div class="hard" id="menuCover" ></div>
                      <div class="hard"></div>
                      <div class="hard"></div>
                   </div>
@@ -279,5 +299,6 @@
       <script src="./assets/javascript/ui.js"></script>
       <script src="./assets/javascript/animatelo.min.js"> </script>
       <script src="./assets/javascript/dom2image.js"> </script>
+      <script src="./assets/javascript/maps.js"> </script>
    </body>
 </html>

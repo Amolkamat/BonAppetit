@@ -2,7 +2,12 @@ var customerKey = "";
 var pageDisplayCounter = 0;
 var pageCounter = 0;
 var flipBookPageDisplay = 2;
-var restaurantName="";
+var restaurantName = "";
+
+var favRestaurants = [];
+var wantToGo = [];
+var person;
+var restaurants = [];
 
 var customerObject = {
 
@@ -39,7 +44,7 @@ $(document).ready(function() {
             console.log(value);
             if (value.customerData.profile.loginId === $("#username").val() && value.customerData.profile.password === $("#password").val()) {
                 //Found Match for the correct customer
-             
+
 
                 customerKey = value.key;
                 customerObject = value.customerData;
@@ -56,16 +61,110 @@ $(document).ready(function() {
                 $("#userWelcome").show();
                 $(".navbar").show();
 
+                //addToLists(customerObject.restaurants);
+
+
+                restaurants = customerObject.restaurants;
+                for (i = 0; i < restaurants.length; i++) {
+                    console.log("call Loop" + i);
+                    var name = restaurants[i].restaurantName;
+
+                    var lat = restaurants[i].location.latitude;
+                    console.log(lat);
+                    var lng = restaurants[i].location.longitude;
+                    var type = restaurants[i].type;
+                    console.log(type);
+                    var locationObject = {
+                        name: name,
+                        lat: lat,
+                        lng: lng,
+                        type: type
+                    };
+
+                    console.log(locationObject);
+                    favRestaurants.push(locationObject);
+
+                }
 
 
             }
+            
         })
 
         //Clear contents
         $("#username").val("");
         $("#password").val("");
 
+        console.log(favRestaurants);
+            console.log("Call Init Map");
+            initMap();
+            $("#mapPanel").show();
+        //Load the map automatically.
+
+
     })
+
+
+
+    function initMap() {
+        var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {
+                lat: -34.397,
+                lng: 150.644
+            },
+            zoom: 11
+        });
+        infoWindow = new google.maps.InfoWindow;
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                map.setCenter(pos);
+                var marker = new google.maps.Marker({
+                    position: pos,
+                    map: map
+                });
+                for (i = 0; i < favRestaurants.length; i++) {
+                    console.log("Count me Map" + i)
+                    var randPos = {
+                        lat: parseFloat(favRestaurants[i].lat),
+                        lng: parseFloat(favRestaurants[i].lng)
+                    };
+                    if (favRestaurants[i].type == 0) {
+                        var marker = new google.maps.Marker({
+                            position: randPos,
+                            icon: iconBase + 'grn-stars.png',
+                            map: map
+                        });
+                    } else {
+                        var marker = new google.maps.Marker({
+                            position: randPos,
+                            icon: iconBase + 'blu-stars.png',
+                            map: map
+                        });
+                    }
+                }
+            }, function() {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
 
     $("#registerSubmit").on("click", function() {
 
@@ -299,7 +398,7 @@ $(document).ready(function() {
             url: "https://developers.zomato.com/api/v2.1/dailymenu?res_id=" + restaurantId,
             dataType: 'json',
             success: function(response) {
-                
+
                 $.each(response["daily_menus"], function(index, value) {
 
                     var tableHolder = 0;
@@ -308,7 +407,7 @@ $(document).ready(function() {
                     $(restaurantMenu).appendTo("#restaurantMenu");
 
                     $("#menuCover").html(restaurantName + " - Enjoy and Love Food!")
-                    
+
                     var table = $('<table> <tr><th>Item Id</th><th>Menu Item</th> <th>Price</th></tr></table>').addClass('restaurantMenuTable');
                     $(table).appendTo("#tableHolder" + tableHolder);
 
@@ -326,7 +425,7 @@ $(document).ready(function() {
                         if (pageDisplayCounter == 2) {
                             console.log("*****Append Table Here****");
 
-                            
+
                             console.log($(table));
                             console.log("TableHolder Count " + tableHolder);
                             pageDisplayCounter = 0;
@@ -347,7 +446,7 @@ $(document).ready(function() {
                 })
 
                 closeModal();
-
+                debugger;
                 console.log("PageCounter Value " + pageCounter);
 
                 for (var i = 0; i < pageCounter; i++) {
@@ -356,13 +455,13 @@ $(document).ready(function() {
                             quality: 0.95
                         })
                         .then(function(dataUrl) {
-                                                  
+
 
                             var image = $("<img>");
                             $(image).attr("src", dataUrl);
 
                             var flipBookPage = $("<div> </div>").prepend(image);
-                            
+
 
                             $('#flipbook').turn('addPage', flipBookPage, flipBookPageDisplay);
                             flipBookPageDisplay++;

@@ -400,6 +400,11 @@ background-color:white;
   border: 1px solid black;
   color: white;
   
+  
+  
+}
+#restaurantMenu{
+background:url("../images/bimage.png");
 }
 td {
     padding: 0.5em;
@@ -465,4 +470,12 @@ color: white;
   font-family: 'chalkduster', fantasy, 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: white;
   font-weight: bold;
+}
+.btn-login {
+  background-color: #33aa33;
+}
+
+#map {
+
+  height: 500px;
 }
