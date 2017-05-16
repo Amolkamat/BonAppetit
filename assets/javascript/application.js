@@ -83,7 +83,7 @@ var buildRestaurantPanel = function(response,callOrigin) {
     var restaurantCounter = 0;
     $.each(response["restaurants"], function(index, value) {
 
-        var searchResultItem = $("<div class='row' >");
+        var searchResultItem = $("<div class='row restaurantDisplay' >");
 
         //Section 1 - Adding the Restaurant Image
         var imageId = "resImage" + restaurantCounter;
@@ -155,6 +155,8 @@ var buildRestaurantPanel = function(response,callOrigin) {
 
         {
             var actionButton = $("<input type='button' value='Add me' class='btn btn-custom restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
+
+            var menuButton = $("<input type='button' value='Menu' class='btn btn-custom menuItemDisplay' data-toggle='modal' data-target='#myModal' >  </input>").appendTo(actionButtonsColumnDiv);
         }
         
 
@@ -172,8 +174,26 @@ var buildRestaurantPanel = function(response,callOrigin) {
                 "data-rating":value["restaurant"].user_rating.aggregate_rating,
                 "data-parentRow":rowId
             })
+        if(menuButton != null) 
+        {
 
 
+        $(menuButton)
+            .attr({
+
+                "data-restaurantId": value["restaurant"].id,
+                "data-restaurantName": value["restaurant"].name,
+                "data-restaurantLatitude": value["restaurant"].location.latitude,
+                "data-restaurantLongitude": value["restaurant"].location.longitude,
+                "data-imageId": imageId,
+                "data-image":value["restaurant"].thumb,
+                "data-cuisines":value["restaurant"].cuisines,
+                "data-address": value["restaurant"].location.address,
+                "data-rating":value["restaurant"].user_rating.aggregate_rating,
+                "data-parentRow":rowId
+            })    
+        }
+        $(actionButtonsColumnDiv).appendTo(searchResultItem);
         $(actionButtonsColumnDiv).appendTo(searchResultItem);
 
         var cusineList = $("<h6> <b> Cuisines: </b> " + value["restaurant"].cuisines + "</h6>");
@@ -223,4 +243,11 @@ $(function() {
         e.preventDefault();
     });
 
+});
+
+
+$('a.btn').on('click', function(e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
+    $(".modal-body").html('<iframe width="100%" height="100%" frameborder="0" scrolling="no" allowtransparency="true" src="'+url+'"></iframe>');
 });

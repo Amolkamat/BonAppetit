@@ -1,4 +1,8 @@
 var customerKey = "";
+var pageDisplayCounter = 0;
+var pageCounter = 0;
+var flipBookPageDisplay = 2;
+
 var customerObject = {
 
     "customerId": 0,
@@ -11,6 +15,8 @@ var customerObject = {
     }
 
 }
+
+
 
 var customerList = [];
 
@@ -26,19 +32,18 @@ $(document).ready(function() {
 
         //Find if the username password matches.
 
-        console.log(" Entire Customer List" + customerList);
-
-
 
         $.each(customerList, function(index, value) {
 
-
+            console.log(value);
             if (value.customerData.profile.loginId === $("#username").val() && value.customerData.profile.password === $("#password").val()) {
                 //Found Match for the correct customer
+             
+
                 customerKey = value.key;
                 customerObject = value.customerData;
+                console.log("Match found")
                 console.log(JSON.stringify(value.customerData));
-
 
                 //Modify the Screen information as per the current customer
 
@@ -50,14 +55,14 @@ $(document).ready(function() {
                 $("#userWelcome").show();
                 $(".navbar").show();
 
-                //Clear contents
-                $("#username").val("");
-                $("#password").val("");
+
 
             }
         })
 
-        console.log("Type of Customer Rstaurants " + Array.isArray(customerObject.restaurants));
+        //Clear contents
+        $("#username").val("");
+        $("#password").val("");
 
     })
 
@@ -86,16 +91,20 @@ $(document).ready(function() {
 
     })
 
+
     //Initial Read and get the appropriate customer Objects
     database.ref().on("child_added", function(snapshot) {
         var dbCustomerObject = new Object();
         dbCustomerObject.key = snapshot.key;
         dbCustomerObject.customerData = snapshot.val();
+
+
+        console.log(snapshot.val());
+
         customerList.push(dbCustomerObject);
         customerKey = snapshot.key;
 
-        console.log("Customer Object from DB " + JSON.stringify(customerKeyObject));
-        console.log(customerList);
+
     });
 
     $("#restaurantPanel").on("click", ".restaurantAdd", function() {
@@ -103,9 +112,22 @@ $(document).ready(function() {
         //Get the key for Testing purposes.
 
         //Check if the restaurant id is not available already
-        console.log($(this).attr("data-restaurantId"));
+        /*
+        domtoimage.toJpeg(document.getElementById("test"), { quality: 0.95 })
+    .then(function (dataUrl) {
+        var link = document.createElement('a')
+        
+        URL = dataUrl;
+        
+        link.href = dataUrl;
+        var $testCount= $("<div> <img id='image'> </div>");
+        $("#hello").after($testCount);
+        //link.click();
+        $("#image").attr("src", URL);
+        
+    });  */
 
-        console.log("from Restaurant Add" + customerObject.restaurants);
+
 
 
         //Add the restaurant object to Customer Id
@@ -122,9 +144,7 @@ $(document).ready(function() {
                 address: $(this).attr("data-address")
             }
         }
-        console.log($(this).attr("data-restaurantLatitude"));
-        console.log($(this).attr("data-restaurantLongitude"));
-        console.log(customerObject);
+
 
         if (customerObject.restaurants == null) {
             customerObject.restaurants = [];
@@ -134,7 +154,6 @@ $(document).ready(function() {
         customerObject.restaurants.push(selectedRestaurant);
 
 
-        console.log("/" + customerKey + "/restaurants/");
 
 
         database.ref("/" + customerKey + "/").update({
@@ -178,9 +197,9 @@ $(document).ready(function() {
             // Animation complete.
         });
 
-         var parentRowId = $(this).attr("data-parentRow");
-        
-        $("."+parentRowId).fadeOut(500, function(){});
+        var parentRowId = $(this).attr("data-parentRow");
+
+        $("." + parentRowId).fadeOut(500, function() {});
 
     })
 
@@ -235,17 +254,17 @@ $(document).ready(function() {
 
     $("#restaurantPanel").on("click", ".restaurantRemove", function() {
         console.log($(this).attr("data-restaurantId"));
-         console.log(customerObject.restaurants);
-        var deleteRestaurantId =  $(this).attr("data-restaurantId");
-        var restaurantId =  $(this).attr("data-restaurantId");
+        console.log(customerObject.restaurants);
+        var deleteRestaurantId = $(this).attr("data-restaurantId");
+        var restaurantId = $(this).attr("data-restaurantId");
         var tempArray = [];
-        
-        customerObject.restaurants = $.grep(customerObject.restaurants,function(item,value) { 
-                                       
-                    return item.restaurantId != deleteRestaurantId; 
-                });
-    
-        
+
+        customerObject.restaurants = $.grep(customerObject.restaurants, function(item, value) {
+
+            return item.restaurantId != deleteRestaurantId;
+        });
+
+
         database.ref("/" + customerKey + "/").update({
 
             restaurants: customerObject.restaurants
@@ -253,10 +272,116 @@ $(document).ready(function() {
         })
         //Animate and remove the row 
         var parentRowId = $(this).attr("data-parentRow");
-        
-        $("."+parentRowId).fadeOut(500, function(){});
-});
 
-   
+        $("." + parentRowId).fadeOut(500, function() {});
+    });
+
+
+    $("#restaurantPanel").on("click", ".menuItemDisplay", function() {
+
+        $(".modal-title").text($(this).attr("data-restaurantName"));
+
+        //Empty Flipbook Div
+        var restaurantName = $(this).attr("data-restaurantName");
+        console.log(restaurantName);
+
+        //Call Restaurant API to get the menu item
+        var restaurantId = 16507679;
+
+        $.ajax({
+            beforeSend: function(request) {
+                request.setRequestHeader("user-key", authorizationToken);
+                openModal();
+            },
+
+
+            url: "https://developers.zomato.com/api/v2.1/dailymenu?res_id=" + restaurantId,
+            dataType: 'json',
+            success: function(response) {
+                
+                $.each(response["daily_menus"], function(index, value) {
+
+                    var tableHolder = 0;
+                    pageCounter = 0;
+                    var restaurantMenu = $("<div> </div>").attr("id", "tableHolder" + tableHolder);
+                    $(restaurantMenu).appendTo("#restaurantMenu");
+
+                    
+                    
+                    var table = $('<table></table>').addClass('restaurantMenuTable');
+                    $(table).appendTo("#tableHolder" + tableHolder);
+
+                    for (var menuCounter = 0; menuCounter < value["daily_menu"].dishes.length; menuCounter++) {
+
+                        console.log("Menu Counter" + menuCounter);
+                        console.log($(table));
+                        var rowMenu = $('<tr></tr>');
+
+                        var dishColumn = $('<td></td>').text(value["daily_menu"].dishes[menuCounter]["dish"].dish_id).appendTo(rowMenu);
+                        var nameColumn = $('<td></td>').text(value["daily_menu"].dishes[menuCounter]["dish"].name).appendTo(rowMenu);
+                        var priceColumn = $('<td></td>').text(value["daily_menu"].dishes[menuCounter]["dish"].price).appendTo(rowMenu);
+                        $(rowMenu.appendTo(table));
+
+                        if (pageDisplayCounter == 2) {
+                            console.log("*****Append Table Here****");
+
+                            
+                            console.log($(table));
+                            console.log("TableHolder Count " + tableHolder);
+                            pageDisplayCounter = 0;
+                            tableHolder++;
+                            pageCounter++;
+                            restaurantMenu = $("<div> </div>").attr("id", "tableHolder" + tableHolder);
+                            $(restaurantMenu).appendTo("#restaurantMenu");
+                            table = $('<table></table>').addClass('restaurantMenuTable').appendTo("#tableHolder" + tableHolder);
+
+                        } else {
+                            pageDisplayCounter++;
+                        }
+
+
+                    }
+
+
+                })
+
+                closeModal();
+
+                console.log("PageCounter Value " + pageCounter);
+
+                for (var i = 0; i < pageCounter; i++) {
+
+                    domtoimage.toJpeg(document.getElementById("tableHolder" + i), {
+                            quality: 0.95
+                        })
+                        .then(function(dataUrl) {
+                                                  
+
+                            var image = $("<img>");
+                            $(image).attr("src", dataUrl);
+
+                            var flipBookPage = $("<div> </div>").prepend(image);
+                            
+
+                            $('#flipbook').turn('addPage', flipBookPage, flipBookPageDisplay);
+                            flipBookPageDisplay++;
+
+                        });
+
+                }
+                $('#restaurantMenu').css('opacity', '0.0');
+
+            }
+        });
+
+
+    });
+
+
 
 })
+$("#flipbook").turn({
+    width: 800,
+    height: 400,
+    autoCenter: true
+});

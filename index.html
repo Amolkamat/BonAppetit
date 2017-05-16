@@ -15,9 +15,9 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
       <!-- Firebase Reference -->
       <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-      <link rel="stylesheet" type="text/css" href="./assets/css/custom.css">
       <link rel='stylesheet prefetch' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
       <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+      <link rel="stylesheet" type="text/css" href="./assets/css/custom.css">
    </head>
    <body>
       <div id="background-carousel">
@@ -26,10 +26,9 @@
                <div class="item active" style="background-image:url(./assets/images/BackgroundFoodImage1.jpeg)"></div>
                <div class="item" style="background-image:url(./assets/images/BackgroundFoodImage2.jpeg)"></div>
                <div class="item" style="background-image:url(./assets/images/BackgroundFoodImage3.jpeg)"></div>
-               
                <div class="item" style="background-image:url(./assets/images/BackgroundFoodImage4.jpeg)"></div>
-                <div class="item" style="background-image:url(./assets/images/BackgroundFoodImage5.jpeg)"></div>
-                 <div class="item" style="background-image:url(./assets/images/BackgroundFoodImage6.jpg)"></div>
+               <div class="item" style="background-image:url(./assets/images/BackgroundFoodImage5.jpeg)"></div>
+               <div class="item" style="background-image:url(./assets/images/BackgroundFoodImage6.jpg)"></div>
                <div class="item" style="background-image:url(./assets/images/Biriyani.jpg)"></div>
                <div class="item" style="background-image:url(./assets/images/IndianFood.jpg)"></div>
                <div class="item" style="background-image:url(./assets/images/Fries.jpg)"></div>
@@ -44,11 +43,8 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span> 
                </button>
-               
-
                <a target="_blank" href="#" class="navbar-brand"><span id="logo">C</span>My App.</a>
             </div>
-
             <div class="collapse navbar-collapse">
                <ul class="nav navbar-nav">
                   <li><a href="#">Home</a></li>
@@ -209,19 +205,46 @@
          </div>
       </div>
       <div class="container">
-         <div class="row searchResultsContent">
+         <div class="row searchResultsContent col-md-10 col-md-offset-1">
             <div class="panel panel-default" id="resPanel">
                <div class="panel-body">
                   <div id="restaurantPanel">
-                     <div class="col-md-11" id="leftRestaurantSection">
+                     <div class="col-md-9" id="leftRestaurantSection">
                      </div>
                   </div>
                </div>
             </div>
          </div>
       </div>
+      <!-- Button trigger modal -->
+      <div id="restaurantMenu">
+      </div>
 
-
+      <div id="myModal" class="modal fade">
+         <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">Modal title</h4>
+               </div>
+               <div class="modal-body">
+                  <div id="flipbook">
+                    <div class="hard"></div>
+                   
+                     
+                     
+                     <div class="hard"></div> 
+                     <div class="hard"></div> 
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               </div>
+            </div>
+            
+         </div>
+        
+      </div>
       <div id="fade"></div>
       <div id="modal">
          <img id="loader" src="./assets/images/spin.gif" />
@@ -247,9 +270,12 @@
          
       </script>
       <!-- JavaScript -->
+      <script src="./assets/javascript/turn.js"> </script>
       <script src="./assets/javascript/application.js"></script>
       <script src="./assets/javascript/customer.js"></script>
       <script src="./assets/javascript/phanimate.jquery.js"></script>
       <script src="./assets/javascript/ui.js"></script>
+      <script src="./assets/javascript/animatelo.min.js"> </script>
+      <script src="./assets/javascript/dom2image.js"> </script>
    </body>
 </html>
