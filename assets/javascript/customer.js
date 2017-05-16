@@ -379,7 +379,6 @@ $(document).ready(function() {
     });
 
 
-
 })
 $("#flipbook").turn({
     width: 800,
