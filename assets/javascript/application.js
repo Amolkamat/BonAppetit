@@ -149,7 +149,7 @@ var buildRestaurantPanel = function(response,callOrigin) {
         var actionButtonsColumnDiv = $("<div class='col-md-1' >");
         if(callOrigin==="removeRestaurant")
         {
-            var actionButton = $("<input type='button' value='Remove' class='btn btn-custom restaurantRemove'>  </input>").appendTo(actionButtonsColumnDiv);
+            var actionButton = $("<input type='button' value='Remove' class='btn btn-link  restaurantRemove'>  </input>").appendTo(actionButtonsColumnDiv);
         }
             else
 
