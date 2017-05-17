@@ -328,10 +328,18 @@ $(document).ready(function() {
 
         $("#userWelcome").hide();
         $(".navbar").hide();
+        $("#mapPanel").hide();
         $(".wrapper").show();
+
 
     })
     $("#favouriteRestaurants").on("click", function() {
+        
+        //Hide other panels
+        $("#mapPanel").hide();
+   
+         $("#accountPanel").hide();
+
         console.log("Favourite Restaurants");
         //$("#resPanel").hide();
         $("#leftRestaurantSection").empty();
@@ -500,3 +508,39 @@ $("#flipbook").turn({
     height: 400,
     autoCenter: true
 });
+
+$("#settingsButton").on("click",function(){
+
+    //Hide other Panels
+    $("#resPanel").hide();
+    $("#mapPanel").hide();
+
+
+    $("#accountPanel").show();
+
+
+
+        var firstName = customerObject.profile.firstName;
+        $("#currentFirstName").text("Current First Name: " + firstName);
+        var lastName = customerObject.profile.lastName;
+        $("#currentLastName").text("Current Last Name: " + lastName);
+        var userName = customerObject.profile.loginId;
+        $("#currentUserName").text("Current User Name: " + userName);
+        var email = customerObject.profile.emailAddress;
+        $("#currentEmail").text("Current Email: " + email);
+        var password = customerObject.profile.password;
+        $("#currentPassword").text("Current Password: " + password);
+
+    })
+
+$("#saveChanges").on("click",function(){
+        if($("#passwordRegisterAcc").val() == $("#confirm-passwordAcc").val()) {
+            database.ref("/"+customerKey+"/profile/").update({
+                firstName: $("#firstNameAcc").val(),
+                lastName: $("#lastNameAcc").val(),
+                loginId: $("#userNameAcc").val(),
+                emailAddress: $("#emailAcc").val(),
+                password: $("#confirm-passwordAcc").val()
+            })
+        } else{}      
+    });

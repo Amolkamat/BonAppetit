@@ -223,7 +223,7 @@ $(document).ready(function() {
     $(".navbar").hide();
     $("#mapPanel").hide();
     //Get all user information from the database.
-
+    $("#accountPanel").hide();
 })
 
 $(function() {
