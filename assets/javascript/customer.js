@@ -116,7 +116,7 @@ $(document).ready(function() {
             zoom: 11
         });
         infoWindow = new google.maps.InfoWindow;
-        
+
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -136,13 +136,24 @@ $(document).ready(function() {
                         lat: parseFloat(favRestaurants[i].lat),
                         lng: parseFloat(favRestaurants[i].lng)
                     };
+
+
                     if (favRestaurants[i].type == 0) {
                         var marker = new google.maps.Marker({
                             position: randPos,
                             icon: iconBase + 'grn-stars.png',
-                            map: map,
-                            content: "Hello"
+                            map: map
                         });
+                        var name = favRestaurants[i].name;
+                        google.maps.event.addListener(marker, 'click', (function(marker, i,name) {
+                return function() {
+                    
+          infoWindow.setContent(name);
+          infoWindow.open(map, marker);
+        }
+      })(marker, i,name));    
+
+
                     } else {
                         var marker = new google.maps.Marker({
                             position: randPos,
@@ -150,6 +161,7 @@ $(document).ready(function() {
                             map: map
                         });
                     }
+                    
                 }
             }, function() {
                 handleLocationError(true, infoWindow, map.getCenter());
