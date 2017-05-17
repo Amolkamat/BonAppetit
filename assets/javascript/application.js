@@ -271,3 +271,16 @@ $('a.btn').on('click', function(e) {
     var url = $(this).attr('href');
     $(".modal-body").html('<iframe width="100%" height="100%" frameborder="0" scrolling="no" allowtransparency="true" src="'+url+'"></iframe>');
 });
+
+$("#homeButton").on("click", function(e) {
+    e.preventDefault();
+   
+    console.log("Hello from Home Button");
+    $("#resPanel").hide();
+
+    $("#userWelcome").show();
+    
+    $("#mapPanel").hide();
+    //Get all user information from the database.
+    $("#accountPanel").hide();
+});

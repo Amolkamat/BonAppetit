@@ -97,6 +97,8 @@ $(document).ready(function() {
 
         console.log(favRestaurants);
             console.log("Call Init Map");
+            $("#map").empty();
+
             initMap();
             $("#mapPanel").show();
         //Load the map automatically.
@@ -312,12 +314,16 @@ $(document).ready(function() {
     //Sign Out Button - Clean up Script
     $("#signOut").on("click", function() {
         console.log("Sign out customer");
+        customerObject.restaurants = [];
+        customerObject = {};
+        
         $("#resPanel").hide();
 
         $("#userWelcome").hide();
         $(".navbar").hide();
         $("#mapPanel").hide();
         $(".wrapper").show();
+
 
 
     })
@@ -355,7 +361,6 @@ $(document).ready(function() {
                 domainRestaurantObject.restaurant.user_rating = new Object();
             domainRestaurantObject.restaurant.user_rating.aggregate_rating = value.userRating;
             domainRestaurantObject.restaurant.cuisines = value.cuisines;
-         
             if(currentElement === "recommendedRestaurants" && (value.type==="1") )
             {
                 domainRestaurantList.restaurants.push(domainRestaurantObject);    
