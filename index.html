@@ -80,7 +80,9 @@
                         <li class="divider navbar-login-session-bg"></li>
                         <li id="settingsButton"><a href="#">Account Settings <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
                         <li class="divider"></li>
-                        <li id="favouriteRestaurants"><a href="#">Favourites Restaurants <span class="glyphicon glyphicon-heart pull-right"></span></a></li>
+                        <li id="favouriteRestaurants" class="customerRestaurantPreference"><a href="#">Favourite Restaurants <span class="glyphicon glyphicon-heart pull-right"></span></a></li>
+                        <li class="divider"></li>
+                        <li id="recommendedRestaurants" class="customerRestaurantPreference"><a href="#">Recommended Restaurants <span class="glyphicon glyphicon-star pull-right"></span></a></li>
                         <li class="divider"></li>
                         <li id="signOut"><a href="#">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
                      </ul>
@@ -209,41 +211,44 @@
       </div>
       <!-- Account Update Section -->
       <div class="container">
-         <div class="row col-md-10 col-md-offset-1">
+         <div class="row col-md-6 col-md-offset-2">
             <div class="panel panel-default" id="accountPanel">
                <div class="panel-body">
                 
                      <div id="accountSettings">
                         <div class="form-group">
-                           <h3 id="currentFirstName"></h3>
+                           
                            <label for="firstName"> Change First Name</label>
                            <input type="text" name="firstName" id="firstNameAcc" tabindex="1" class="form-control" placeholder="" value="">
                         </div>
                         <div class="form-group">
-                           <h3 id="currentLastName"></h3>
+                           
                            <label for="lastName"> Change Last Name</label>
                            <input type="text" name="lastName" id="lastNameAcc" tabindex="2" class="form-control" placeholder="" value="">
                         </div>
                         <div class="form-group">
-                           <h3 id="currentUserName"></h3>
+                           
                            <label for="userName">Change User Name</label>
                            <input type="text" name="userName" id="userNameAcc" tabindex="3" class="form-control" placeholder="" value="">
                         </div>
                         <div class="form-group">
-                           <h3 id="currentEmail"></h3>
+                          
                            <label for="email"> Change Email Address</label>
                            <input type="email" name="email" id="emailAcc" tabindex="4" class="form-control" placeholder="" value="">
                         </div>
                         <div class="form-group">
-                           <h3 id="currentPassword"></h3>
+                          
                            <label for="passwordRegister"> Change Password</label>
                            <input type="password" name="passwordRegister" id="passwordRegisterAcc" tabindex="5" class="form-control" placeholder="">
                         </div>
                         <div class="form-group">
-                           <label for="confirm-password">Confirm Change Password</label>
+                           
                            <input type="password" name="confirm-password" id="confirm-passwordAcc" tabindex="6" class="form-control" placeholder="">
                         </div>
-                        <button type="submit" id="citySubmit" class="btn btn-custom"><span id="saveChanges">Save Changes</span></button>
+                        
+                        <div class="col-sm-6 col-sm-offset-3">
+                                             <input type="button" name="register-submit" id="saveChanges" tabindex="7" class="form-control btn btn-register" value="Save Changes">
+                                          </div>
                    
                   </div>
                </div>

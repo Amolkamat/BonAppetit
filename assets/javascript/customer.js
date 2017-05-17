@@ -321,14 +321,15 @@ $(document).ready(function() {
 
 
     })
-    $("#favouriteRestaurants").on("click", function() {
+    $(".customerRestaurantPreference").on("click", function() {
         
+        var currentElement = $(this).attr("id");
         //Hide other panels
         $("#mapPanel").hide();
    
          $("#accountPanel").hide();
 
-        console.log("Favourite Restaurants");
+        
         //$("#resPanel").hide();
         $("#leftRestaurantSection").empty();
         console.log(customerObject.restaurants);
@@ -354,7 +355,15 @@ $(document).ready(function() {
                 domainRestaurantObject.restaurant.user_rating = new Object();
             domainRestaurantObject.restaurant.user_rating.aggregate_rating = value.userRating;
             domainRestaurantObject.restaurant.cuisines = value.cuisines;
-            domainRestaurantList.restaurants.push(domainRestaurantObject);
+         
+            if(currentElement === "recommendedRestaurants" && (value.type==="1") )
+            {
+                domainRestaurantList.restaurants.push(domainRestaurantObject);    
+            } else if ((currentElement === "favouriteRestaurants") && (value.type==="0") ) {
+                domainRestaurantList.restaurants.push(domainRestaurantObject);
+            }
+
+            
 
         });
 
