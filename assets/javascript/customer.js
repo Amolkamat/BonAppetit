@@ -316,8 +316,9 @@ $(document).ready(function() {
         console.log("Sign out customer");
         customerObject.restaurants = [];
         customerObject = {};
-        
+
         $("#resPanel").hide();
+        $("#accountPanel").hide();
 
         $("#userWelcome").hide();
         $(".navbar").hide();
@@ -536,13 +537,80 @@ $("#settingsButton").on("click",function(){
     })
 
 $("#saveChanges").on("click",function(){
+        var tempFirstName="";
+        var tempLastName = "";
+        var tempUserName = "";
+        var tempEmail = "";
+        var tempPassword = "";
+        debugger;
+
+        if($("#firstNameAcc").val()==="") {
+            tempFirstName = customerObject.profile.firstName;
+        } else
+        {
+            tempFirstName = $("#firstNameAcc").val();
+        }
+             
+
+        if($("#lastNameAcc").val()==="") {
+            tempLastName = customerObject.profile.lastName;
+        } else
+        {
+            tempLastName = $("#lastNameAcc").val();
+        }
+
+        if($("#userNameAcc").val()==="") {
+            tempUserName= customerObject.profile.loginId;
+        } else
+        {
+            tempUserName = $("#userNameAcc").val();
+        }
+
+        if($("#emailAcc").val()==="") {
+            tempEmail= customerObject.profile.emailAddress;
+        } else
+        {
+            tempEmail = $("#emailAcc").val();
+        }
+
+        if($("#confirm-passwordAcc").val()==="") {
+            tempPassword = customerObject.profile.password;
+        } else
+        {
+            tempPassword = $("#passwordRegisterAcc").val();
+        }
+
+        
+        
         if($("#passwordRegisterAcc").val() == $("#confirm-passwordAcc").val()) {
             database.ref("/"+customerKey+"/profile/").update({
-                firstName: $("#firstNameAcc").val(),
-                lastName: $("#lastNameAcc").val(),
-                loginId: $("#userNameAcc").val(),
-                emailAddress: $("#emailAcc").val(),
-                password: $("#confirm-passwordAcc").val()
+                firstName: tempFirstName,
+                lastName: tempLastName,
+                loginId: tempUserName,
+                emailAddress: tempEmail,
+                password: tempPassword
             })
-        } else{}      
+
+            $("#alertBox").text("Profile updated successfully");
+            $("alertBox").addClass("alert-success");
+            $("#alertBox").fadeIn();    
+                 closeAlertBox();
+       
+
+        }  
+        else
+        {
+            $("#alertBox").text("Profile update failed");
+            $("#alertBox").addClass("alert-danger");
+            $("#alertBox").fadeIn();    
+                 closeAlertBox();
+        }
+
     });
+
+function closeAlertBox(){
+window.setTimeout(function () {
+  $("#alertBox").fadeOut(300)
+}, 3000);
+} 
+

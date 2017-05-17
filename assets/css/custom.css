@@ -502,4 +502,9 @@ color: white;
     50% {-webkit-transform: rotate(180deg);}
 }
 
-
+h2 {
+  color: white;
+}
+#alertBox {
+  display:none;
+}
