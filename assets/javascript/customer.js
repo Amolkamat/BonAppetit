@@ -104,8 +104,6 @@ $(document).ready(function() {
 
     })
 
-
-
     function initMap() {
         var iconBase = 'https://maps.google.com/mapfiles/kml/paddle/';
         map = new google.maps.Map(document.getElementById('map'), {
@@ -160,6 +158,15 @@ $(document).ready(function() {
                             icon: iconBase + 'blu-stars.png',
                             map: map
                         });
+
+                        var name = favRestaurants[i].name;
+                        google.maps.event.addListener(marker, 'click', (function(marker, i,name) {
+                return function() {
+                    
+          infoWindow.setContent(name);
+          infoWindow.open(map, marker);
+        }
+      })(marker, i,name));      
                     }
                     
                 }
@@ -225,30 +232,11 @@ $(document).ready(function() {
 
     $("#restaurantPanel").on("click", ".restaurantAdd", function() {
 
-        //Get the key for Testing purposes.
-
-        //Check if the restaurant id is not available already
-        /*
-        domtoimage.toJpeg(document.getElementById("test"), { quality: 0.95 })
-    .then(function (dataUrl) {
-        var link = document.createElement('a')
-        
-        URL = dataUrl;
-        
-        link.href = dataUrl;
-        var $testCount= $("<div> <img id='image'> </div>");
-        $("#hello").after($testCount);
-        //link.click();
-        $("#image").attr("src", URL);
-        
-    });  */
-
-
 
 
         //Add the restaurant object to Customer Id
         var selectedRestaurant = {
-            type: "0",
+            type: $(this).attr("data-type"),
             restaurantId: $(this).attr("data-restaurantId"),
             restaurantName: $(this).attr("data-restaurantName"),
             userRating: $(this).attr("data-rating"),

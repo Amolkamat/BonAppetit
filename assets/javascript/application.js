@@ -154,9 +154,13 @@ var buildRestaurantPanel = function(response,callOrigin) {
             else
 
         {
-            var actionButton = $("<input type='button' value='Add me' class='btn btn-link restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
+            var actionButton = $("<input type='button' value='Favourite' class='btn btn-link restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
+
+            var recommendButton = $("<input type='button' value='Recommended' class='btn btn-link restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
 
             var menuButton = $("<input type='button' value='Menu  ' class='btn btn-link menuItemDisplay' data-toggle='modal' data-target='#myModal' >  </input>").appendTo(actionButtonsColumnDiv);
+
+
         }
         
 
@@ -172,8 +176,24 @@ var buildRestaurantPanel = function(response,callOrigin) {
                 "data-cuisines":value["restaurant"].cuisines,
                 "data-address": value["restaurant"].location.address,
                 "data-rating":value["restaurant"].user_rating.aggregate_rating,
-                "data-parentRow":rowId
+                "data-parentRow":rowId,
+                "data-type":"0"
             })
+        $(recommendButton)
+            .attr({
+
+                "data-restaurantId": value["restaurant"].id,
+                "data-restaurantName": value["restaurant"].name,
+                "data-restaurantLatitude": value["restaurant"].location.latitude,
+                "data-restaurantLongitude": value["restaurant"].location.longitude,
+                "data-imageId": imageId,
+                "data-image":value["restaurant"].thumb,
+                "data-cuisines":value["restaurant"].cuisines,
+                "data-address": value["restaurant"].location.address,
+                "data-rating":value["restaurant"].user_rating.aggregate_rating,
+                "data-parentRow":rowId,
+                "data-type": "1"
+            })    
         if(menuButton != null) 
         {
 
