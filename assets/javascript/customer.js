@@ -336,7 +336,7 @@ $(document).ready(function() {
         $(".navbar").hide();
         $("#mapPanel").hide();
         $(".wrapper").show();
-
+        window.location.reload();
 
 
     })

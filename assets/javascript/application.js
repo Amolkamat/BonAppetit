@@ -236,7 +236,8 @@ var buildRestaurantPanel = function(response,callOrigin) {
 }
 
 $(document).ready(function() {
-
+     $('input#city').cityAutocomplete();
+     
     $("#resPanel").hide();
 
     $("#userWelcome").hide();
@@ -244,7 +245,10 @@ $(document).ready(function() {
     $("#mapPanel").hide();
     //Get all user information from the database.
     $("#accountPanel").hide();
+
 })
+
+$('input#city').cityAutocomplete();
 
 $(function() {
 
