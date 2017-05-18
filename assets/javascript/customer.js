@@ -554,46 +554,59 @@ $("#saveChanges").on("click",function(){
         var tempUserName = "";
         var tempEmail = "";
         var tempPassword = "";
-        debugger;
+        var checkBlanks = 0;
 
         if($("#firstNameAcc").val()==="") {
             tempFirstName = customerObject.profile.firstName;
+            
         } else
         {
             tempFirstName = $("#firstNameAcc").val();
+            checkBlanks++;
         }
              
 
         if($("#lastNameAcc").val()==="") {
             tempLastName = customerObject.profile.lastName;
+            
         } else
         {
             tempLastName = $("#lastNameAcc").val();
+            checkBlanks++;
         }
 
         if($("#userNameAcc").val()==="") {
             tempUserName= customerObject.profile.loginId;
+            
         } else
         {
             tempUserName = $("#userNameAcc").val();
+            checkBlanks++;
         }
 
         if($("#emailAcc").val()==="") {
             tempEmail= customerObject.profile.emailAddress;
+            
         } else
         {
             tempEmail = $("#emailAcc").val();
+            checkBlanks++;
         }
 
         if($("#confirm-passwordAcc").val()==="") {
             tempPassword = customerObject.profile.password;
+
         } else
         {
             tempPassword = $("#passwordRegisterAcc").val();
+            checkBlanks++;
         }
 
         
-        
+        if (checkBlanks >0 )
+        {
+
+
         if($("#passwordRegisterAcc").val() == $("#confirm-passwordAcc").val()) {
             database.ref("/"+customerKey+"/profile/").update({
                 firstName: tempFirstName,
@@ -617,8 +630,17 @@ $("#saveChanges").on("click",function(){
             $("#alertBox").fadeIn();    
                  closeAlertBox("#alertBox");
         }
+    } 
+    else
+        {   
+        $("#alertBox").text("Please enter at least one field name to modify");
+            $("#alertBox").addClass("alert-danger");
+            $("#alertBox").fadeIn();    
+           closeAlertBox("#alertBox");
+        }
+    }
 
-    });
+    );
 
 function closeAlertBox(alertBox){
 window.setTimeout(function () {
