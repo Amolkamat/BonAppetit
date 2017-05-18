@@ -147,6 +147,7 @@ $(document).ready(function() {
                 map.setCenter(pos);
                 var marker = new google.maps.Marker({
                     position: pos,
+                    icon: iconBase + 'red-circle.png',
                     map: map
                 });
                 for (i = 0; i < favRestaurants.length; i++) {
@@ -176,7 +177,7 @@ $(document).ready(function() {
                     } else {
                         var marker = new google.maps.Marker({
                             position: randPos,
-                            icon: iconBase + 'blu-stars.png',
+                            icon: iconBase + 'blu-diamond.png',
                             map: map
                         });
 
