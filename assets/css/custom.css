@@ -515,3 +515,7 @@ h2 {
 #mapContainer , #accountContainer{
   margin-top:2em;
 }
+#headerLogo {
+  font-family: 'Pacifico', cursive;
+  color: white;
+}
