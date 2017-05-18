@@ -42,6 +42,7 @@ $(document).ready(function() {
         $.each(customerList, function(index, value) {
 
             console.log(value);
+
             if (value.customerData.profile.loginId === $("#username").val() && value.customerData.profile.password === $("#password").val()) {
                 //Found Match for the correct customer
 
@@ -81,7 +82,7 @@ $(document).ready(function() {
                         type: type
                     };
 
-                    console.log(locationObject);
+                   
                     favRestaurants.push(locationObject);
 
                 }
@@ -90,21 +91,24 @@ $(document).ready(function() {
             }
             
         })
-        if(customerObject.profile.login != undefined)
+        debugger;
+        
+        console.log(customerObject.profile.loginId);
+
+        if(customerObject.profile.loginId != "")
         {
             //Clear contents
         $("#username").val("");
         $("#password").val("");
 
-        console.log(favRestaurants);
-            console.log("Call Init Map");
+   
             $("#map").empty();
-
+            
             initMap();
             $("#mapPanel").show();
         //Load the map automatically.
     } else {
-    
+        console.log("Serial Killer");
         $("#loginAlertBox").fadeIn();    
                  closeAlertBox("#loginAlertBox");
                      return;
