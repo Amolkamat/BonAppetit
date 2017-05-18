@@ -512,3 +512,6 @@ h2 {
 #alertBox, #loginAlertBox {
   display:none;
 }
+#mapContainer , #accountContainer{
+  margin-top:2em;
+}
