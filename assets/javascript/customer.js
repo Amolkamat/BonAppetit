@@ -104,7 +104,10 @@ $(document).ready(function() {
             $("#mapPanel").show();
         //Load the map automatically.
     } else {
-        return;
+    
+        $("#loginAlertBox").fadeIn();    
+                 closeAlertBox("#loginAlertBox");
+                     return;
     }
         
 
@@ -608,14 +611,14 @@ $("#saveChanges").on("click",function(){
             $("#alertBox").text("Profile update failed");
             $("#alertBox").addClass("alert-danger");
             $("#alertBox").fadeIn();    
-                 closeAlertBox();
+                 closeAlertBox("#alertBox");
         }
 
     });
 
-function closeAlertBox(){
+function closeAlertBox(alertBox){
 window.setTimeout(function () {
-  $("#alertBox").fadeOut(300)
+  $(alertBox).fadeOut(300)
 }, 3000);
 } 
 

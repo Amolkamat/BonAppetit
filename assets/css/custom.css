@@ -505,6 +505,6 @@ color: white;
 h2 {
   color: white;
 }
-#alertBox {
+#alertBox, #loginAlertBox {
   display:none;
 }
