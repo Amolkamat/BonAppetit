@@ -37,84 +37,91 @@ $(document).ready(function() {
     $("#loginButton").on("click", function() {
 
         //Find if the username password matches.
+        if ($("#username").val() != "") {
 
 
-        $.each(customerList, function(index, value) {
 
-            console.log(value);
+            $.each(customerList, function(index, value) {
 
-            if (value.customerData.profile.loginId === $("#username").val() && value.customerData.profile.password === $("#password").val()) {
-                //Found Match for the correct customer
+                console.log(value);
 
-
-                customerKey = value.key;
-                customerObject = value.customerData;
-                console.log("Match found")
-                console.log(JSON.stringify(value.customerData));
-
-                //Modify the Screen information as per the current customer
-
-                $("#dropDownName").text(customerObject.profile.firstName);
-                $("#customerName").text(customerObject.profile.firstName + " " + customerObject.profile.lastName);
-                $("#customerEmail").text(customerObject.profile.emailAddress);
-
-                $(".wrapper").hide();
-                $("#userWelcome").show();
-                $(".navbar").show();
-
-                //addToLists(customerObject.restaurants);
+                if (value.customerData.profile.loginId === $("#username").val() && value.customerData.profile.password === $("#password").val()) {
+                    //Found Match for the correct customer
 
 
-                restaurants = customerObject.restaurants;
-                for (i = 0; i < restaurants.length; i++) {
-                    console.log("call Loop" + i);
-                    var name = restaurants[i].restaurantName;
+                    customerKey = value.key;
+                    customerObject = value.customerData;
+                    console.log("Match found")
+                    console.log(JSON.stringify(value.customerData));
 
-                    var lat = restaurants[i].location.latitude;
-                    console.log(lat);
-                    var lng = restaurants[i].location.longitude;
-                    var type = restaurants[i].type;
-                    console.log(type);
-                    var locationObject = {
-                        name: name,
-                        lat: lat,
-                        lng: lng,
-                        type: type
-                    };
+                    //Modify the Screen information as per the current customer
 
-                   
-                    favRestaurants.push(locationObject);
+                    $("#dropDownName").text(customerObject.profile.firstName);
+                    $("#customerName").text(customerObject.profile.firstName + " " + customerObject.profile.lastName);
+                    $("#customerEmail").text(customerObject.profile.emailAddress);
+
+                    $(".wrapper").hide();
+                    $("#userWelcome").show();
+                    $(".navbar").show();
+
+                    //addToLists(customerObject.restaurants);
+
+
+                    restaurants = customerObject.restaurants;
+                    for (i = 0; i < restaurants.length; i++) {
+                        console.log("call Loop" + i);
+                        var name = restaurants[i].restaurantName;
+
+                        var lat = restaurants[i].location.latitude;
+                        console.log(lat);
+                        var lng = restaurants[i].location.longitude;
+                        var type = restaurants[i].type;
+                        console.log(type);
+                        var locationObject = {
+                            name: name,
+                            lat: lat,
+                            lng: lng,
+                            type: type
+                        };
+
+
+                        favRestaurants.push(locationObject);
+
+                    }
+
 
                 }
 
+            })
 
+
+            console.log(customerObject.profile.loginId);
+
+            if (customerObject.profile.loginId != "") {
+                //Clear contents
+                $("#username").val("");
+                $("#password").val("");
+
+
+                $("#map").empty();
+
+                initMap();
+                $("#mapPanel").show();
+                //Load the map automatically.
+            } else {
+
+                $("#loginAlertBox").fadeIn();
+                closeAlertBox("#loginAlertBox");
+                return;
             }
-            
-        })
-        debugger;
-        
-        console.log(customerObject.profile.loginId);
 
-        if(customerObject.profile.loginId != "")
-        {
-            //Clear contents
-        $("#username").val("");
-        $("#password").val("");
+        } else {
+            $("#loginAlertBox").text("Please enter Login/Password ");
+            $("#loginAlertBox").fadeIn();
 
-   
-            $("#map").empty();
-            
-            initMap();
-            $("#mapPanel").show();
-        //Load the map automatically.
-    } else {
-        console.log("Serial Killer");
-        $("#loginAlertBox").fadeIn();    
-                 closeAlertBox("#loginAlertBox");
-                     return;
-    }
-        
-
+            closeAlertBox("#loginAlertBox");
+            return;
+        }
 
     })
 
@@ -157,13 +164,13 @@ $(document).ready(function() {
                             map: map
                         });
                         var name = favRestaurants[i].name;
-                        google.maps.event.addListener(marker, 'click', (function(marker, i,name) {
-                return function() {
-                    
-          infoWindow.setContent(name);
-          infoWindow.open(map, marker);
-        }
-      })(marker, i,name));    
+                        google.maps.event.addListener(marker, 'click', (function(marker, i, name) {
+                            return function() {
+
+                                infoWindow.setContent(name);
+                                infoWindow.open(map, marker);
+                            }
+                        })(marker, i, name));
 
 
                     } else {
@@ -174,15 +181,15 @@ $(document).ready(function() {
                         });
 
                         var name = favRestaurants[i].name;
-                        google.maps.event.addListener(marker, 'click', (function(marker, i,name) {
-                return function() {
-                    
-          infoWindow.setContent(name);
-          infoWindow.open(map, marker);
-        }
-      })(marker, i,name));      
+                        google.maps.event.addListener(marker, 'click', (function(marker, i, name) {
+                            return function() {
+
+                                infoWindow.setContent(name);
+                                infoWindow.open(map, marker);
+                            }
+                        })(marker, i, name));
                     }
-                    
+
                 }
             }, function() {
                 handleLocationError(true, infoWindow, map.getCenter());
@@ -192,7 +199,7 @@ $(document).ready(function() {
             handleLocationError(false, infoWindow, map.getCenter());
         }
 
-       
+
     }
 
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -341,14 +348,14 @@ $(document).ready(function() {
 
     })
     $(".customerRestaurantPreference").on("click", function() {
-        
+
         var currentElement = $(this).attr("id");
         //Hide other panels
         $("#mapPanel").hide();
-   
-         $("#accountPanel").hide();
 
-        
+        $("#accountPanel").hide();
+
+
         //$("#resPanel").hide();
         $("#leftRestaurantSection").empty();
         console.log(customerObject.restaurants);
@@ -374,14 +381,13 @@ $(document).ready(function() {
                 domainRestaurantObject.restaurant.user_rating = new Object();
             domainRestaurantObject.restaurant.user_rating.aggregate_rating = value.userRating;
             domainRestaurantObject.restaurant.cuisines = value.cuisines;
-            if(currentElement === "recommendedRestaurants" && (value.type==="1") )
-            {
-                domainRestaurantList.restaurants.push(domainRestaurantObject);    
-            } else if ((currentElement === "favouriteRestaurants") && (value.type==="0") ) {
+            if (currentElement === "recommendedRestaurants" && (value.type === "1")) {
+                domainRestaurantList.restaurants.push(domainRestaurantObject);
+            } else if ((currentElement === "favouriteRestaurants") && (value.type === "0")) {
                 domainRestaurantList.restaurants.push(domainRestaurantObject);
             }
 
-            
+
 
         });
 
@@ -524,7 +530,7 @@ $("#flipbook").turn({
     autoCenter: true
 });
 
-$("#settingsButton").on("click",function(){
+$("#settingsButton").on("click", function() {
 
     //Hide other Panels
     $("#resPanel").hide();
@@ -535,116 +541,105 @@ $("#settingsButton").on("click",function(){
 
 
 
-        var firstName = customerObject.profile.firstName;
-        $("#currentFirstName").text("Current First Name: " + firstName);
-        var lastName = customerObject.profile.lastName;
-        $("#currentLastName").text("Current Last Name: " + lastName);
-        var userName = customerObject.profile.loginId;
-        $("#currentUserName").text("Current User Name: " + userName);
-        var email = customerObject.profile.emailAddress;
-        $("#currentEmail").text("Current Email: " + email);
-        var password = customerObject.profile.password;
-        $("#currentPassword").text("Current Password: " + password);
+    var firstName = customerObject.profile.firstName;
+    $("#currentFirstName").text("Current First Name: " + firstName);
+    var lastName = customerObject.profile.lastName;
+    $("#currentLastName").text("Current Last Name: " + lastName);
+    var userName = customerObject.profile.loginId;
+    $("#currentUserName").text("Current User Name: " + userName);
+    var email = customerObject.profile.emailAddress;
+    $("#currentEmail").text("Current Email: " + email);
+    var password = customerObject.profile.password;
+    $("#currentPassword").text("Current Password: " + password);
 
-    })
+})
 
-$("#saveChanges").on("click",function(){
-        var tempFirstName="";
+$("#saveChanges").on("click", function() {
+        var tempFirstName = "";
         var tempLastName = "";
         var tempUserName = "";
         var tempEmail = "";
         var tempPassword = "";
         var checkBlanks = 0;
 
-        if($("#firstNameAcc").val()==="") {
+        if ($("#firstNameAcc").val() === "") {
             tempFirstName = customerObject.profile.firstName;
-            
-        } else
-        {
+
+        } else {
             tempFirstName = $("#firstNameAcc").val();
             checkBlanks++;
         }
-             
 
-        if($("#lastNameAcc").val()==="") {
+
+        if ($("#lastNameAcc").val() === "") {
             tempLastName = customerObject.profile.lastName;
-            
-        } else
-        {
+
+        } else {
             tempLastName = $("#lastNameAcc").val();
             checkBlanks++;
         }
 
-        if($("#userNameAcc").val()==="") {
-            tempUserName= customerObject.profile.loginId;
-            
-        } else
-        {
+        if ($("#userNameAcc").val() === "") {
+            tempUserName = customerObject.profile.loginId;
+
+        } else {
             tempUserName = $("#userNameAcc").val();
             checkBlanks++;
         }
 
-        if($("#emailAcc").val()==="") {
-            tempEmail= customerObject.profile.emailAddress;
-            
-        } else
-        {
+        if ($("#emailAcc").val() === "") {
+            tempEmail = customerObject.profile.emailAddress;
+
+        } else {
             tempEmail = $("#emailAcc").val();
             checkBlanks++;
         }
 
-        if($("#confirm-passwordAcc").val()==="") {
+        if ($("#confirm-passwordAcc").val() === "") {
             tempPassword = customerObject.profile.password;
 
-        } else
-        {
+        } else {
             tempPassword = $("#passwordRegisterAcc").val();
             checkBlanks++;
         }
 
-        
-        if (checkBlanks >0 )
-        {
+
+        if (checkBlanks > 0) {
 
 
-        if($("#passwordRegisterAcc").val() == $("#confirm-passwordAcc").val()) {
-            database.ref("/"+customerKey+"/profile/").update({
-                firstName: tempFirstName,
-                lastName: tempLastName,
-                loginId: tempUserName,
-                emailAddress: tempEmail,
-                password: tempPassword
-            })
+            if ($("#passwordRegisterAcc").val() == $("#confirm-passwordAcc").val()) {
+                database.ref("/" + customerKey + "/profile/").update({
+                    firstName: tempFirstName,
+                    lastName: tempLastName,
+                    loginId: tempUserName,
+                    emailAddress: tempEmail,
+                    password: tempPassword
+                })
 
-            $("#alertBox").text("Profile updated successfully");
-            $("alertBox").addClass("alert-success");
-            $("#alertBox").fadeIn();    
-                 closeAlertBox();
-       
+                $("#alertBox").text("Profile updated successfully");
+                $("alertBox").addClass("alert-success");
+                $("#alertBox").fadeIn();
+                closeAlertBox();
 
-        }  
-        else
-        {
-            $("#alertBox").text("Profile update failed");
+
+            } else {
+                $("#alertBox").text("Profile update failed");
+                $("#alertBox").addClass("alert-danger");
+                $("#alertBox").fadeIn();
+                closeAlertBox("#alertBox");
+            }
+        } else {
+            $("#alertBox").text("Please enter at least one field name to modify");
             $("#alertBox").addClass("alert-danger");
-            $("#alertBox").fadeIn();    
-                 closeAlertBox("#alertBox");
-        }
-    } 
-    else
-        {   
-        $("#alertBox").text("Please enter at least one field name to modify");
-            $("#alertBox").addClass("alert-danger");
-            $("#alertBox").fadeIn();    
-           closeAlertBox("#alertBox");
+            $("#alertBox").fadeIn();
+            closeAlertBox("#alertBox");
         }
     }
 
-    );
+);
 
-function closeAlertBox(alertBox){
-window.setTimeout(function () {
-  $(alertBox).fadeOut(300)
-}, 3000);
-} 
-
+function closeAlertBox(alertBox) {
+    window.setTimeout(function() {
+        $(alertBox).fadeOut(300)
+    }, 3000);
+}
