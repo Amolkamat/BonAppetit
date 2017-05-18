@@ -154,7 +154,7 @@ var buildRestaurantPanel = function(response,callOrigin) {
             else
 
         {
-            var actionButton = $("<input type='button' value='Favourite' class='btn btn-link restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
+            var actionButton = $("<input type='button' value='Favorite' class='btn btn-link restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
 
             var recommendButton = $("<input type='button' value='Recommended' class='btn btn-link restaurantAdd'>  </input>").appendTo(actionButtonsColumnDiv);
 
