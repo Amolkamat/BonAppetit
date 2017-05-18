@@ -90,8 +90,9 @@ $(document).ready(function() {
             }
             
         })
-
-        //Clear contents
+        if(customerObject.profile.login != undefined)
+        {
+            //Clear contents
         $("#username").val("");
         $("#password").val("");
 
@@ -102,6 +103,10 @@ $(document).ready(function() {
             initMap();
             $("#mapPanel").show();
         //Load the map automatically.
+    } else {
+        return;
+    }
+        
 
 
     })
