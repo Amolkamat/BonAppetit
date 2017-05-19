@@ -89,7 +89,7 @@ var buildRestaurantPanel = function(response,callOrigin) {
         //Section 1 - Adding the Restaurant Image
         var imageId = "resImage" + restaurantCounter;
         var rowId = "rowId" + restaurantCounter
-        var imageColumnDiv = $("<div class='col-md-3' >");
+        var imageColumnDiv = $("<div class='col-xs-12 col-sm-12 col-md-3' >");
 
 
         $(imageColumnDiv).appendTo(searchResultItem);
@@ -109,7 +109,7 @@ var buildRestaurantPanel = function(response,callOrigin) {
 
 
         //Section 2 - Append Restaurant Name and Rating section
-        var detailsColumnDiv = $("<div class='col-md-3' >");
+        var detailsColumnDiv = $("<div class='col-xs-6 col-sm-6 col-md-3' >");
         var restaurantName = $("<h4>" + restaurantCounter + ". " + value["restaurant"].name + "</h4>");
         $(detailsColumnDiv).appendTo(searchResultItem);
         $(restaurantName).appendTo(detailsColumnDiv);
@@ -136,7 +136,7 @@ var buildRestaurantPanel = function(response,callOrigin) {
         }
 
         //Section 3 - Append Address of the restaurant
-        var addressColumnDiv = $("<div class='col-md-3' >");
+        var addressColumnDiv = $("<div class='col-xs-6 col-sm-12 col-md-3' >");
 
         var addressArray = value["restaurant"].location.address.split(',');;
         $.each(addressArray, function(index, value) {
@@ -147,7 +147,7 @@ var buildRestaurantPanel = function(response,callOrigin) {
         $(addressColumnDiv).appendTo(searchResultItem);
 
         //Section 4 - Add the appropriate action buttons
-        var actionButtonsColumnDiv = $("<div class='col-md-1' >");
+        var actionButtonsColumnDiv = $("<div class='col-xs-12 col-sm-12 col-md-1' >");
         if(callOrigin==="removeRestaurant")
         {
             var actionButton = $("<input type='button' value='Remove' class='btn btn-link  restaurantRemove'>  </input>").appendTo(actionButtonsColumnDiv);

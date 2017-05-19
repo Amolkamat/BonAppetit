@@ -30,12 +30,7 @@ h3{
     font-family: cursive;
 }
 .img-responsive{
-    cursor: pointer;
-    float:left;
-    
-    height:8em;
-    width: 11em;
-    margin-bottom:1em;
+   min-width: 100%;
 }
 
 ul {
