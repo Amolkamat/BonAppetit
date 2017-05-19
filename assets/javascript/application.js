@@ -16,6 +16,7 @@ var database = firebase.database();
 
 $("#citySubmit").on("click", function(event) {
     $("#resPanel").hide();
+    $("mapPanel").hide();
 
     event.preventDefault();
 
