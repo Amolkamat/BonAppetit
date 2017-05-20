@@ -464,7 +464,7 @@ $(document).ready(function() {
                         var rowMenu = $('<tr></tr>');
 
                         var dishColumn = $('<td></td>').text(value["daily_menu"].dishes[menuCounter]["dish"].dish_id).appendTo(rowMenu);
-                        var nameColumn = $('<td></td>').text(value["daily_menu"].dishes[menuCounter]["dish"].name).appendTo(rowMenu);
+                        var nameColumn = $('<td></td>').text((value["daily_menu"].dishes[menuCounter]["dish"].name).substring(1,12)).appendTo(rowMenu);
                         var priceColumn = $('<td></td>').text(value["daily_menu"].dishes[menuCounter]["dish"].price).appendTo(rowMenu);
                         $(rowMenu.appendTo(table));
 
