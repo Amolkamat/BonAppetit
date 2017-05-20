@@ -432,7 +432,7 @@ $(document).ready(function() {
         console.log(restaurantName);
 
         //Call Restaurant API to get the menu item
-        var restaurantId = 16507679;
+        var restaurantId = 16507624;
 
         $.ajax({
             beforeSend: function(request) {
@@ -448,7 +448,7 @@ $(document).ready(function() {
                 $.each(response["daily_menus"], function(index, value) {
 
                     var tableHolder = 0;
-                    pageCounter = 0;
+                    
                     var restaurantMenu = $("<div> </div>").attr("id", "tableHolder" + tableHolder);
                     $(restaurantMenu).appendTo("#restaurantMenu");
 
