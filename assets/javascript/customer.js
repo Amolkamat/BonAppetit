@@ -492,7 +492,7 @@ $(document).ready(function() {
                 })
 
                 closeModal();
-                debugger;
+              
                 console.log("PageCounter Value " + pageCounter);
 
                 for (var i = 0; i < pageCounter; i++) {
